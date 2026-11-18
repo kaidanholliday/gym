@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-title" content="IronLog">
     <meta name="theme-color" id="themeColorMeta" content="#f8fafc">
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f172a'/%3E%3Cpath d='M18 18v28M46 18v28M10 24v16M54 24v16M18 32h28' stroke='%233b82f6' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f172a'/%3E%3Cpath d='M18 18v28M46 18v28M10 24v16M54 24v16M18 32h28' stroke='%233b82f6' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
     <title>IronLog - Workout Tracker</title>
     <style>
          /* =========================================================
@@ -46,7 +46,6 @@
              --shadow-md: 0 8px 20px rgba(15, 23, 42, 0.08);
          }
 
-         /* Native CSS Auto Dark Mode when phone is in Dark Mode */
          @media (prefers-color-scheme: dark) {
              :root:not([data-theme="light"]) {
                  --bg-body: #050810;
@@ -76,7 +75,6 @@
              }
          }
 
-         /* Manual Dark Mode Lock */
          :root[data-theme="dark"] {
              --bg-body: #050810;
              --card-bg: #111827;
@@ -200,7 +198,7 @@
          }
 
          /* =========================================================
-        NAVIGATION PILL TABS
+        DYNAMIC NAVIGATION PILL TABS
         ========================================================= */
          .day-nav-wrapper {
              position: sticky;
@@ -211,20 +209,28 @@
          }
 
          .day-nav {
-             display: grid;
-             grid-template-columns: repeat(5, 1fr);
+             display: flex;
              gap: 4px;
              background: var(--nav-bg);
              padding: 4px;
              border-radius: var(--radius-md);
              border: 1px solid var(--border-color);
+             overflow-x: auto;
+             scrollbar-width: none;
+             -ms-overflow-style: none;
          }
 
+             .day-nav::-webkit-scrollbar {
+                 display: none;
+             }
+
          .day-pill {
+             flex: 1 0 auto;
+             min-width: 62px;
              border: none;
              background: transparent;
              color: var(--text-muted);
-             padding: 9px 2px;
+             padding: 9px 10px;
              font-size: 0.75rem;
              font-weight: 700;
              border-radius: var(--radius-sm);
@@ -438,7 +444,7 @@
              }
 
          /* =========================================================
-        SET ROWS & INPUTS (WITH OPTIONAL PLATE COUNTER BUTTON)
+        SET ROWS & INPUTS
         ========================================================= */
          .sets-table {
              width: 100%;
@@ -494,7 +500,6 @@
              color: #ffffff;
          }
 
-         /* Weight Input Compound Box (with optional plate button) */
          .weight-box {
              display: flex;
              align-items: center;
@@ -534,7 +539,6 @@
              justify-content: center;
              cursor: pointer;
              flex-shrink: 0;
-             transition: background 0.15s;
          }
 
              .plate-trigger-btn:active {
@@ -758,7 +762,6 @@
              margin-top: 4px;
          }
 
-         /* Visual Barbell Display */
          .barbell-visual {
              display: flex;
              align-items: center;
@@ -890,7 +893,7 @@
          }
 
          /* =========================================================
-        MODALS
+        MODALS, SUBTABS & IN-MODAL DAY PICKER
         ========================================================= */
          .modal-backdrop {
              position: fixed;
@@ -962,6 +965,69 @@
              overflow-y: auto;
              flex: 1;
          }
+
+         .modal-subtabs {
+             display: grid;
+             grid-template-columns: 1fr 1fr;
+             gap: 4px;
+             background: var(--nav-bg);
+             padding: 4px;
+             border-radius: var(--radius-sm);
+             border: 1px solid var(--border-color);
+             margin-bottom: 14px;
+         }
+
+         .modal-subtab-btn {
+             border: none;
+             background: transparent;
+             color: var(--text-muted);
+             padding: 8px;
+             font-size: 0.8rem;
+             font-weight: 700;
+             border-radius: 7px;
+             cursor: pointer;
+         }
+
+             .modal-subtab-btn.active {
+                 background: var(--card-bg);
+                 color: var(--accent);
+                 box-shadow: var(--shadow-sm);
+             }
+
+         /* Quick Day Switcher Inside Edit Modal */
+         .modal-day-picker {
+             display: flex;
+             gap: 6px;
+             overflow-x: auto;
+             scrollbar-width: none;
+             -ms-overflow-style: none;
+             padding-bottom: 4px;
+             margin-bottom: 14px;
+         }
+
+             .modal-day-picker::-webkit-scrollbar {
+                 display: none;
+             }
+
+         .modal-day-chip {
+             flex: 0 0 auto;
+             padding: 7px 14px;
+             font-size: 0.78rem;
+             font-weight: 700;
+             border-radius: 99px;
+             border: 1px solid var(--border-color);
+             background: var(--card-bg-subtle);
+             color: var(--text-muted);
+             cursor: pointer;
+             white-space: nowrap;
+             transition: all 0.15s ease;
+         }
+
+             .modal-day-chip.active {
+                 background: var(--accent);
+                 border-color: var(--accent);
+                 color: #ffffff;
+             }
 
          .form-group {
              margin-bottom: 14px;
@@ -1049,7 +1115,6 @@
              color: var(--text-muted);
          }
 
-         /* Toast */
          .toast {
              position: fixed;
              bottom: 24px;
@@ -1090,1818 +1155,1979 @@
 </head>
 <body>
 
-  <div class="app-container">
-    
-    <!-- Top Header -->
-    <header class="app-header">
-      <div class="brand">
-        <div class="brand-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 5v14M18 5v14M2 9v6M22 9v6M6 12h12" />
-          </svg>
-        </div>
-        <h1>IronLog</h1>
-      </div>
-      <div class="header-actions">
-        <!-- Theme Switcher Button -->
-        <button class="header-btn" id="themeToggleBtn" title="Switch Theme (Auto / Dark / Light)">
-          <span id="themeIconSvg"></span>
-          <span id="themeLabel">Auto</span>
-        </button>
-        <!-- Unit Toggle -->
-        <button class="header-btn" id="unitToggleBtn" title="Toggle Weight Unit">
-          <span id="unitLabel">LBS</span>
-        </button>
-        <!-- Edit Routine -->
-        <button class="header-btn header-btn-icon-only" id="openEditRoutineBtn" title="Edit Routine">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 20h9"/>
-            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-          </svg>
-        </button>
-        <!-- Import & Export Data -->
-        <button class="header-btn header-btn-icon-only" id="openBackupBtn" title="Import & Export Workout Data">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-        </button>
-      </div>
-    </header>
+    <div class="app-container">
 
-    <!-- Navigation Pills -->
-    <div class="day-nav-wrapper">
-      <nav class="day-nav" id="dayNav"></nav>
+        <!-- Top Header -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 5v14M18 5v14M2 9v6M22 9v6M6 12h12" />
+                    </svg>
+                </div>
+                <h1>IronLog</h1>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" id="themeToggleBtn" title="Switch Theme (Auto / Dark / Light)">
+                    <span id="themeIconSvg"></span>
+                    <span id="themeLabel">Auto</span>
+                </button>
+                <button class="header-btn" id="unitToggleBtn" title="Toggle Weight Unit">
+                    <span id="unitLabel">LBS</span>
+                </button>
+                <button class="header-btn header-btn-icon-only" id="openEditRoutineBtn" title="Edit Routine & Days">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                    </svg>
+                </button>
+                <button class="header-btn header-btn-icon-only" id="openBackupBtn" title="Import & Export Workout Data">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation Pills -->
+        <div class="day-nav-wrapper">
+            <nav class="day-nav" id="dayNav"></nav>
+        </div>
+
+        <!-- Active Day Header Card -->
+        <section class="routine-header-card" id="routineHeaderCard">
+            <div class="routine-title-row">
+                <h2 id="dayTitleText">Workout Day</h2>
+                <span class="routine-focus-badge" id="dayFocusText">Focus</span>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-meta">
+                    <span>Session: <b id="progressSetsText">0 / 0 sets</b></span>
+                    <span>Volume: <b id="progressVolText">0 lbs</b></span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressBarFill"></div>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" id="startFreshBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                Start Fresh Session
+            </button>
+        </section>
+
+        <!-- Main Container -->
+        <main id="mainContainer"></main>
+
     </div>
 
-    <!-- Active Day Header Card -->
-    <section class="routine-header-card" id="routineHeaderCard">
-      <div class="routine-title-row">
-        <h2 id="dayTitleText">Workout Day</h2>
-        <span class="routine-focus-badge" id="dayFocusText">Focus</span>
-      </div>
+    <div class="toast" id="toast">Notice</div>
 
-      <div class="progress-section">
-        <div class="progress-meta">
-          <span>Session: <b id="progressSetsText">0 / 0 sets</b></span>
-          <span>Volume: <b id="progressVolText">0 lbs</b></span>
+    <!-- MODAL: Interactive Plate & Weight Counter -->
+    <div class="modal-backdrop" id="plateModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <div>
+                    <h3 id="plateModalTitle">Weight & Plate Counter</h3>
+                    <div id="plateModalSub" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Exercise</div>
+                </div>
+                <button class="modal-close-btn" id="closePlateModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="plate-readout-box">
+                    <div>
+                        <span class="plate-total-weight" id="plateTotalVal">135</span>
+                        <span class="plate-total-unit" id="plateTotalUnit">lbs</span>
+                    </div>
+                    <div class="plate-breakdown-text" id="plateBreakdownText">Bar (45) + 1×45 per side</div>
+                </div>
+
+                <div class="barbell-visual" id="barbellVisualArea"></div>
+                <div class="base-selector-pills" id="baseSelectorPills"></div>
+
+                <div class="form-label" style="margin-bottom: 6px;">Quick Adjust</div>
+                <div class="quick-steppers-row" id="quickSteppersRow"></div>
+
+                <div id="barbellPlatesControls">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span class="form-label" style="margin-bottom: 0;">Add Plate (Per Side)</span>
+                        <button id="clearPlatesBtn" style="background: none; border: none; color: var(--danger); font-size: 0.75rem; font-weight: 700; cursor: pointer;">Clear Plates</button>
+                    </div>
+                    <div class="plates-grid" id="platesGrid"></div>
+                </div>
+
+                <div id="dumbbellQuickGridWrap" style="display: none;">
+                    <div class="form-label" style="margin-bottom: 6px;">Quick Dumbbell Weights</div>
+                    <div class="plates-grid" id="dumbbellQuickGrid" style="grid-template-columns: repeat(4, 1fr);"></div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+                    <button class="btn btn-secondary" id="applyPlateAllBtn">Apply All Sets</button>
+                    <button class="btn btn-primary" id="applyPlateSetBtn">Apply to Set</button>
+                </div>
+            </div>
         </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="progressBarFill"></div>
-        </div>
-      </div>
-
-      <button class="btn btn-secondary" id="startFreshBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="1 4 1 10 7 10"></polyline>
-          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-        </svg>
-        Start Fresh Session
-      </button>
-    </section>
-
-    <!-- Main Container -->
-    <main id="mainContainer"></main>
-
-  </div>
-
-  <!-- Toast Notice -->
-  <div class="toast" id="toast">Notice</div>
-
-  <!-- MODAL: Interactive Plate & Weight Counter -->
-  <div class="modal-backdrop" id="plateModal">
-    <div class="modal-sheet">
-      <div class="modal-header">
-        <div>
-          <h3 id="plateModalTitle">Weight & Plate Counter</h3>
-          <div id="plateModalSub" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Exercise</div>
-        </div>
-        <button class="modal-close-btn" id="closePlateModalBtn">&times;</button>
-      </div>
-      <div class="modal-body">
-        
-        <div class="plate-readout-box">
-          <div>
-            <span class="plate-total-weight" id="plateTotalVal">135</span>
-            <span class="plate-total-unit" id="plateTotalUnit">lbs</span>
-          </div>
-          <div class="plate-breakdown-text" id="plateBreakdownText">Bar (45) + 1×45 per side</div>
-        </div>
-
-        <!-- Visual Barbell / Plate Stacker -->
-        <div class="barbell-visual" id="barbellVisualArea"></div>
-
-        <!-- Base Weight Mode -->
-        <div class="base-selector-pills" id="baseSelectorPills"></div>
-
-        <!-- Quick Weight Steppers -->
-        <div class="form-label" style="margin-bottom: 6px;">Quick Adjust</div>
-        <div class="quick-steppers-row" id="quickSteppersRow"></div>
-
-        <!-- Add Plates Per Side (Shown when in Barbell mode) -->
-        <div id="barbellPlatesControls">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span class="form-label" style="margin-bottom: 0;">Add Plate (Per Side)</span>
-            <button id="clearPlatesBtn" style="background: none; border: none; color: var(--danger); font-size: 0.75rem; font-weight: 700; cursor: pointer;">Clear Plates</button>
-          </div>
-          <div class="plates-grid" id="platesGrid"></div>
-        </div>
-
-        <!-- Common Dumbbell Quick Picks (Shown when Base = 0) -->
-        <div id="dumbbellQuickGridWrap" style="display: none;">
-          <div class="form-label" style="margin-bottom: 6px;">Quick Dumbbell Weights</div>
-          <div class="plates-grid" id="dumbbellQuickGrid" style="grid-template-columns: repeat(4, 1fr);"></div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
-          <button class="btn btn-secondary" id="applyPlateAllBtn">Apply All Sets</button>
-          <button class="btn btn-primary" id="applyPlateSetBtn">Apply to Set</button>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- MODAL: Edit Routine -->
-  <div class="modal-backdrop" id="editRoutineModal">
-    <div class="modal-sheet">
-      <div class="modal-header">
-        <h3 id="editRoutineModalTitle">Edit Routine</h3>
-        <button class="modal-close-btn" id="closeEditRoutineBtn">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Exercises for this day</span>
-          <button class="btn btn-primary" id="openAddExerciseBtn" style="padding: 7px 12px; font-size: 0.78rem;">
-            + Add Exercise
-          </button>
+    <!-- MODAL: Edit Routine & Workout Days -->
+    <div class="modal-backdrop" id="editRoutineModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <h3 id="editRoutineModalTitle">Edit Routine & Days</h3>
+                <button class="modal-close-btn" id="closeEditRoutineBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-subtabs">
+                    <button class="modal-subtab-btn active" id="tabExercisesBtn">Exercises</button>
+                    <button class="modal-subtab-btn" id="tabDaysBtn">Manage Days</button>
+                </div>
+
+                <!-- Section 1: Exercises (With Quick In-Modal Day Switcher!) -->
+                <div id="editExercisesSection">
+                    <div class="modal-day-picker" id="editModalDayPicker"></div>
+                    <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                        <span id="editingDayHint" style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Exercises</span>
+                        <button class="btn btn-primary" id="openAddExerciseBtn" style="padding: 7px 12px; font-size: 0.78rem;">
+                            + Add Exercise
+                        </button>
+                    </div>
+                    <div id="editExerciseList"></div>
+                </div>
+
+                <!-- Section 2: Manage All Workout Days -->
+                <div id="editDaysSection" style="display: none;">
+                    <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Your Workout Split Days</span>
+                        <button class="btn btn-primary" id="openAddDayBtn" style="padding: 7px 12px; font-size: 0.78rem;">
+                            + Add Day
+                        </button>
+                    </div>
+                    <div id="editDaysList"></div>
+                </div>
+            </div>
         </div>
-        <div id="editExerciseList"></div>
-      </div>
     </div>
-  </div>
 
-  <!-- MODAL: Add / Edit Single Exercise -->
-  <div class="modal-backdrop" id="exerciseFormModal">
-    <div class="modal-sheet">
-      <div class="modal-header">
-        <h3 id="exerciseFormTitle">Exercise Details</h3>
-        <button class="modal-close-btn" id="closeExerciseFormBtn">&times;</button>
-      </div>
-      <div class="modal-body">
-        <input type="hidden" id="editExId">
-        <div class="form-group">
-          <label class="form-label">Exercise Name</label>
-          <input type="text" class="form-control" id="exNameInput" placeholder="e.g. Barbell Bench Press">
+    <!-- MODAL: Add / Edit Single Exercise -->
+    <div class="modal-backdrop" id="exerciseFormModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <h3 id="exerciseFormTitle">Exercise Details</h3>
+                <button class="modal-close-btn" id="closeExerciseFormBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editExId">
+                <div class="form-group">
+                    <label class="form-label">Exercise Name</label>
+                    <input type="text" class="form-control" id="exNameInput" placeholder="e.g. Barbell Bench Press">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label class="form-label">Target Sets</label>
+                        <input type="number" class="form-control" id="exSetsInput" min="1" max="10" placeholder="3">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Target Reps</label>
+                        <input type="text" class="form-control" id="exRepsInput" placeholder="e.g. 6–8 reps">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Form Cue / Focus Note</label>
+                    <textarea class="form-control" id="exCueInput" placeholder="e.g. Squeeze at top, controlled eccentric."></textarea>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px; background: var(--card-bg-subtle); padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                    <input type="checkbox" id="exPlateToggleInput" style="width: 18px; height: 18px; accent-color: var(--accent);">
+                    <label for="exPlateToggleInput" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); cursor: pointer;">Enable Plate & Weight Counter Button</label>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 16px;">
+                    <button class="btn btn-secondary" id="cancelExerciseFormBtn" style="flex:1;">Cancel</button>
+                    <button class="btn btn-primary" id="saveExerciseFormBtn" style="flex:1;">Save Exercise</button>
+                </div>
+            </div>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-          <div class="form-group">
-            <label class="form-label">Target Sets</label>
-            <input type="number" class="form-control" id="exSetsInput" min="1" max="10" placeholder="3">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Target Reps</label>
-            <input type="text" class="form-control" id="exRepsInput" placeholder="e.g. 6–8 reps">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Form Cue / Focus Note</label>
-          <textarea class="form-control" id="exCueInput" placeholder="e.g. Squeeze at top, controlled eccentric."></textarea>
-        </div>
-        <div class="form-group" style="display: flex; align-items: center; gap: 10px; background: var(--card-bg-subtle); padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-          <input type="checkbox" id="exPlateToggleInput" style="width: 18px; height: 18px; accent-color: var(--accent);">
-          <label for="exPlateToggleInput" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); cursor: pointer;">Enable Plate & Weight Counter Button</label>
-        </div>
-        <div style="display: flex; gap: 8px; margin-top: 16px;">
-          <button class="btn btn-secondary" id="cancelExerciseFormBtn" style="flex:1;">Cancel</button>
-          <button class="btn btn-primary" id="saveExerciseFormBtn" style="flex:1;">Save Exercise</button>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- MODAL: Import / Export Data -->
-  <div class="modal-backdrop" id="backupModal">
-    <div class="modal-sheet">
-      <div class="modal-header">
-        <h3>Import & Export Data</h3>
-        <button class="modal-close-btn" id="closeBackupBtn">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
-          Export your workout routines, logged weights, and Tracked history before upgrading versions—then import them back anytime to keep all your data.
-        </p>
-
-        <div class="form-label">1. Export / Backup Current Data</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px;">
-          <button class="btn btn-secondary" id="exportFileBtn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Save .JSON File
-          </button>
-          <button class="btn btn-secondary" id="copyJsonBtn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-            </svg>
-            Copy Backup Text
-          </button>
+    <!-- MODAL: Add / Edit Workout Day -->
+    <div class="modal-backdrop" id="dayFormModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <h3 id="dayFormTitle">Workout Day Details</h3>
+                <button class="modal-close-btn" id="closeDayFormBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editDayId">
+                <div class="form-group">
+                    <label class="form-label">Tab Name (Short)</label>
+                    <input type="text" class="form-control" id="dayTabNameInput" placeholder="e.g. Tuesday or Push">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Workout Title</label>
+                    <input type="text" class="form-control" id="dayTitleInput" placeholder="e.g. Tuesday: Push Day (Chest & Triceps)">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Focus Badge</label>
+                    <input type="text" class="form-control" id="dayFocusInput" placeholder="e.g. Chest, Shoulders & Triceps">
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 16px;">
+                    <button class="btn btn-secondary" id="cancelDayFormBtn" style="flex:1;">Cancel</button>
+                    <button class="btn btn-primary" id="saveDayFormBtn" style="flex:1;">Save Day</button>
+                </div>
+            </div>
         </div>
-
-        <div class="form-group">
-          <label class="form-label">2. Import from Saved .JSON File</label>
-          <input type="file" id="importFileInput" accept=".json,application/json" class="form-control" style="font-size: 0.82rem;">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Or Paste Backup Text Here</label>
-          <textarea class="form-control" id="pasteJsonInput" placeholder="Paste previously copied backup JSON text here..."></textarea>
-          <button class="btn btn-primary" id="importPastedBtn" style="width: 100%; margin-top: 8px;">
-            Import Workout Data
-          </button>
-        </div>
-
-        <div style="margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border-color);">
-          <button class="btn btn-danger-outline" id="resetDefaultsBtn" style="width: 100%;">
-            Reset Routine to Default 4-Day Split
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script>
-    /* =========================================================
-       DEFAULT 4-DAY SPLIT DATA
-       ========================================================= */
-    const DEFAULT_ROUTINE = [
-      {
-        id: "day-mon",
-        dayName: "Monday",
-        title: "Monday: Upper Body A (Chest & Back Focus)",
-        focus: "Chest & Back Focus",
-        exercises: [
-          {
-            id: "mon-1",
-            name: "Incline Dumbbell Bench Press",
-            targetSets: 3,
-            targetReps: "6–8 reps",
-            cue: "Targets upper chest and front delts.",
-            enablePlateCounter: true
-          },
-          {
-            id: "mon-2",
-            name: "Barbell Bent-Over Row",
-            targetSets: 3,
-            targetReps: "6–8 reps",
-            cue: "Builds upper back thickness and lats."
-          },
-          {
-            id: "mon-3",
-            name: "Standing Dumbbell Overhead Press",
-            targetSets: 3,
-            targetReps: "8–10 reps",
-            cue: "Hits the anterior deltoids and triceps."
-          },
-          {
-            id: "mon-4",
-            name: "Lat Pulldowns (Wide or Neutral Grip)",
-            targetSets: 3,
-            targetReps: "10–12 reps",
-            cue: "Focus on full lat stretch and scapular depression."
-          },
-          {
-            id: "mon-5",
-            name: "Cable Tricep Pushdowns (Rope or Straight Bar)",
-            targetSets: 3,
-            targetReps: "12–15 reps",
-            cue: "Strict form, keeping elbows pinned."
-          }
-        ]
-      },
-      {
-        id: "day-wed",
-        dayName: "Wednesday",
-        title: "Wednesday: Lower Body A (Quad & Glute Focus)",
-        focus: "Quad & Glute Focus",
-        exercises: [
-          {
-            id: "wed-1",
-            name: "Barbell Back Squat",
-            targetSets: 3,
-            targetReps: "6–8 reps",
-            cue: "Primary compound for quad and glute strength.",
-            enablePlateCounter: true
-          },
-          {
-            id: "wed-2",
-            name: "Romanian Deadlift (Dumbbell or Barbell)",
-            targetSets: 3,
-            targetReps: "8–10 reps",
-            cue: "Focus on hip hinge and hamstring stretch.",
-            enablePlateCounter: true
-          },
-          {
-            id: "wed-3",
-            name: "Bulgarian Split Squats",
-            targetSets: 3,
-            targetReps: "8–10 reps per leg",
-            cue: "Fixes unilateral imbalances and hits quads/glutes."
-          },
-          {
-            id: "wed-4",
-            name: "Standing or Seated Calf Raises",
-            targetSets: 4,
-            targetReps: "12–15 reps",
-            cue: "Pause 1 second at the bottom stretch."
-          },
-          {
-            id: "wed-5",
-            name: "Hanging Leg Raises / Captain's Chair",
-            targetSets: 3,
-            targetReps: "10–15 reps",
-            cue: "Core and hip flexor stability."
-          }
-        ]
-      },
-      {
-        id: "day-fri",
-        dayName: "Friday",
-        title: "Friday: Upper Body B (Shoulder & Arm Focus)",
-        focus: "Shoulder & Arm Focus",
-        exercises: [
-          {
-            id: "fri-1",
-            name: "Flat Barbell Bench Press",
-            targetSets: 3,
-            targetReps: "6–8 reps",
-            cue: "Primary horizontal push for overall chest power.",
-            enablePlateCounter: true
-          },
-          {
-            id: "fri-2",
-            name: "Dumbbell Lateral Raises",
-            targetSets: 4,
-            targetReps: "12–15 reps",
-            cue: "Strict lateral delt isolation for shoulder width."
-          },
-          {
-            id: "fri-3",
-            name: "Incline Dumbbell Bicep Curls",
-            targetSets: 3,
-            targetReps: "10–12 reps",
-            cue: "Maximizes long-head bicep stretch."
-          },
-          {
-            id: "fri-4",
-            name: "Overhead Dumbbell Tricep Extension",
-            targetSets: 3,
-            targetReps: "10–12 reps",
-            cue: "Long head tricep emphasis."
-          },
-          {
-            id: "fri-5",
-            name: "Neutral-Grip Pull-ups (or Lat Pulldown)",
-            targetSets: 3,
-            targetReps: "6–10 reps",
-            cue: "Heavy vertical pull."
-          },
-          {
-            id: "fri-6",
-            name: "Seated Cable Row",
-            targetSets: 3,
-            targetReps: "10–12 reps",
-            cue: "Squeeze mid-back and rhomboids."
-          }
-        ]
-      },
-      {
-        id: "day-sun",
-        dayName: "Sunday",
-        title: "Sunday: Lower Body B (Hamstring & Posterior Chain Focus)",
-        focus: "Hamstring & Posterior Chain Focus",
-        exercises: [
-          {
-            id: "sun-1",
-            name: "Conventional Barbell Deadlift",
-            targetSets: 3,
-            targetReps: "5 reps",
-            cue: "Total posterior chain strength and back thickness.",
-            enablePlateCounter: true
-          },
-          {
-            id: "sun-2",
-            name: "Leg Press",
-            targetSets: 3,
-            targetReps: "10–12 reps",
-            cue: "Controlled eccentric, targeting quad volume without spinal loading."
-          },
-          {
-            id: "sun-3",
-            name: "Lying or Seated Hamstring Curls",
-            targetSets: 3,
-            targetReps: "10–12 reps",
-            cue: "Direct knee flexion for hamstrings."
-          },
-          {
-            id: "sun-4",
-            name: "Leg Extensions",
-            targetSets: 3,
-            targetReps: "12–15 reps",
-            cue: "Controlled quad isolation with a 1-second squeeze at the top."
-          },
-          {
-            id: "sun-5",
-            name: "Cable Woodchoppers (or Ab Wheel Rollouts)",
-            targetSets: 3,
-            targetReps: "12 reps per side",
-            cue: "Rotational core strength."
-          }
-        ]
-      }
-    ];
+    <!-- MODAL: Import / Export Data -->
+    <div class="modal-backdrop" id="backupModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <h3>Import & Export Data</h3>
+                <button class="modal-close-btn" id="closeBackupBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
+                    Export your workout routines, logged weights, and Tracked history before upgrading versions—then import them back anytime to keep all your data.
+                </p>
 
-    /* =========================================================
-       APP STATE & STORAGE KEYS
-       ========================================================= */
-    const STORAGE_KEY_ROUTINE = "ironlog_routine_data";
-    const STORAGE_KEY_LOGS    = "ironlog_exercise_logs";
-    const STORAGE_KEY_UNIT    = "ironlog_active_unit";
-    const STORAGE_KEY_DAY     = "ironlog_active_day";
-    const STORAGE_KEY_THEME   = "ironlog_theme_pref";
-    const STORAGE_KEY_HISTORY = "ironlog_history_sessions";
+                <div class="form-label">1. Export / Backup Current Data</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px;">
+                    <button class="btn btn-secondary" id="exportFileBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        Save .JSON File
+                    </button>
+                    <button class="btn btn-secondary" id="copyJsonBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                        </svg>
+                        Copy Backup Text
+                    </button>
+                </div>
 
-    let routine = [];
-    let exerciseLogs = {};
-    let sessionHistory = [];
-    let activeDayId = "day-mon";
-    let activeUnit = "lbs";
-    let currentThemeMode = "auto"; // "auto", "dark", "light"
+                <div class="form-group">
+                    <label class="form-label">2. Import from Saved .JSON File</label>
+                    <input type="file" id="importFileInput" accept=".json,application/json" class="form-control" style="font-size: 0.82rem;">
+                </div>
 
-    function loadState() {
-      const savedRoutine = localStorage.getItem(STORAGE_KEY_ROUTINE);
-      if (savedRoutine) {
-        try { routine = JSON.parse(savedRoutine); }
-        catch (e) { routine = JSON.parse(JSON.stringify(DEFAULT_ROUTINE)); }
-      } else {
-        routine = JSON.parse(JSON.stringify(DEFAULT_ROUTINE));
-        saveRoutine();
-      }
+                <div class="form-group">
+                    <label class="form-label">Or Paste Backup Text Here</label>
+                    <textarea class="form-control" id="pasteJsonInput" placeholder="Paste previously copied backup JSON text here..."></textarea>
+                    <button class="btn btn-primary" id="importPastedBtn" style="width: 100%; margin-top: 8px;">
+                        Import Workout Data
+                    </button>
+                </div>
 
-      const savedLogs = localStorage.getItem(STORAGE_KEY_LOGS);
-      if (savedLogs) {
-        try { exerciseLogs = JSON.parse(savedLogs); }
-        catch (e) { exerciseLogs = {}; }
-      } else {
-        exerciseLogs = {};
-      }
+                <div style="margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border-color);">
+                    <button class="btn btn-danger-outline" id="resetDefaultsBtn" style="width: 100%;">
+                        Reset Routine to Default 4-Day Split
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-      const savedHistory = localStorage.getItem(STORAGE_KEY_HISTORY);
-      if (savedHistory) {
-        try { sessionHistory = JSON.parse(savedHistory); }
-        catch (e) { sessionHistory = []; }
-      } else {
-        sessionHistory = [];
-        autoMigrateExistingLogs();
-      }
+    <script>
+            /* =========================================================
+               DEFAULT 4-DAY SPLIT DATA
+               ========================================================= */
+            const DEFAULT_ROUTINE = [
+              {
+                id: "day-mon",
+                dayName: "Monday",
+                title: "Monday: Upper Body A (Chest & Back Focus)",
+                focus: "Chest & Back Focus",
+                exercises: [
+                  {
+                    id: "mon-1",
+                    name: "Incline Dumbbell Bench Press",
+                    targetSets: 3,
+                    targetReps: "6–8 reps",
+                    cue: "Targets upper chest and front delts.",
+                    enablePlateCounter: true
+                  },
+                  {
+                    id: "mon-2",
+                    name: "Barbell Bent-Over Row",
+                    targetSets: 3,
+                    targetReps: "6–8 reps",
+                    cue: "Builds upper back thickness and lats."
+                  },
+                  {
+                    id: "mon-3",
+                    name: "Standing Dumbbell Overhead Press",
+                    targetSets: 3,
+                    targetReps: "8–10 reps",
+                    cue: "Hits the anterior deltoids and triceps."
+                  },
+                  {
+                    id: "mon-4",
+                    name: "Lat Pulldowns (Wide or Neutral Grip)",
+                    targetSets: 3,
+                    targetReps: "10–12 reps",
+                    cue: "Focus on full lat stretch and scapular depression."
+                  },
+                  {
+                    id: "mon-5",
+                    name: "Cable Tricep Pushdowns (Rope or Straight Bar)",
+                    targetSets: 3,
+                    targetReps: "12–15 reps",
+                    cue: "Strict form, keeping elbows pinned."
+                  }
+                ]
+              },
+              {
+                id: "day-wed",
+                dayName: "Wednesday",
+                title: "Wednesday: Lower Body A (Quad & Glute Focus)",
+                focus: "Quad & Glute Focus",
+                exercises: [
+                  {
+                    id: "wed-1",
+                    name: "Barbell Back Squat",
+                    targetSets: 3,
+                    targetReps: "6–8 reps",
+                    cue: "Primary compound for quad and glute strength.",
+                    enablePlateCounter: true
+                  },
+                  {
+                    id: "wed-2",
+                    name: "Romanian Deadlift (Dumbbell or Barbell)",
+                    targetSets: 3,
+                    targetReps: "8–10 reps",
+                    cue: "Focus on hip hinge and hamstring stretch.",
+                    enablePlateCounter: true
+                  },
+                  {
+                    id: "wed-3",
+                    name: "Bulgarian Split Squats",
+                    targetSets: 3,
+                    targetReps: "8–10 reps per leg",
+                    cue: "Fixes unilateral imbalances and hits quads/glutes."
+                  },
+                  {
+                    id: "wed-4",
+                    name: "Standing or Seated Calf Raises",
+                    targetSets: 4,
+                    targetReps: "12–15 reps",
+                    cue: "Pause 1 second at the bottom stretch."
+                  },
+                  {
+                    id: "wed-5",
+                    name: "Hanging Leg Raises / Captain's Chair",
+                    targetSets: 3,
+                    targetReps: "10–15 reps",
+                    cue: "Core and hip flexor stability."
+                  }
+                ]
+              },
+              {
+                id: "day-fri",
+                dayName: "Friday",
+                title: "Friday: Upper Body B (Shoulder & Arm Focus)",
+                focus: "Shoulder & Arm Focus",
+                exercises: [
+                  {
+                    id: "fri-1",
+                    name: "Flat Barbell Bench Press",
+                    targetSets: 3,
+                    targetReps: "6–8 reps",
+                    cue: "Primary horizontal push for overall chest power.",
+                    enablePlateCounter: true
+                  },
+                  {
+                    id: "fri-2",
+                    name: "Dumbbell Lateral Raises",
+                    targetSets: 4,
+                    targetReps: "12–15 reps",
+                    cue: "Strict lateral delt isolation for shoulder width."
+                  },
+                  {
+                    id: "fri-3",
+                    name: "Incline Dumbbell Bicep Curls",
+                    targetSets: 3,
+                    targetReps: "10–12 reps",
+                    cue: "Maximizes long-head bicep stretch."
+                  },
+                  {
+                    id: "fri-4",
+                    name: "Overhead Dumbbell Tricep Extension",
+                    targetSets: 3,
+                    targetReps: "10–12 reps",
+                    cue: "Long head tricep emphasis."
+                  },
+                  {
+                    id: "fri-5",
+                    name: "Neutral-Grip Pull-ups (or Lat Pulldown)",
+                    targetSets: 3,
+                    targetReps: "6–10 reps",
+                    cue: "Heavy vertical pull."
+                  },
+                  {
+                    id: "fri-6",
+                    name: "Seated Cable Row",
+                    targetSets: 3,
+                    targetReps: "10–12 reps",
+                    cue: "Squeeze mid-back and rhomboids."
+                  }
+                ]
+              },
+              {
+                id: "day-sun",
+                dayName: "Sunday",
+                title: "Sunday: Lower Body B (Hamstring & Posterior Chain Focus)",
+                focus: "Hamstring & Posterior Chain Focus",
+                exercises: [
+                  {
+                    id: "sun-1",
+                    name: "Conventional Barbell Deadlift",
+                    targetSets: 3,
+                    targetReps: "5 reps",
+                    cue: "Total posterior chain strength and back thickness.",
+                    enablePlateCounter: true
+                  },
+                  {
+                    id: "sun-2",
+                    name: "Leg Press",
+                    targetSets: 3,
+                    targetReps: "10–12 reps",
+                    cue: "Controlled eccentric, targeting quad volume without spinal loading."
+                  },
+                  {
+                    id: "sun-3",
+                    name: "Lying or Seated Hamstring Curls",
+                    targetSets: 3,
+                    targetReps: "10–12 reps",
+                    cue: "Direct knee flexion for hamstrings."
+                  },
+                  {
+                    id: "sun-4",
+                    name: "Leg Extensions",
+                    targetSets: 3,
+                    targetReps: "12–15 reps",
+                    cue: "Controlled quad isolation with a 1-second squeeze at the top."
+                  },
+                  {
+                    id: "sun-5",
+                    name: "Cable Woodchoppers (or Ab Wheel Rollouts)",
+                    targetSets: 3,
+                    targetReps: "12 reps per side",
+                    cue: "Rotational core strength."
+                  }
+                ]
+              }
+            ];
 
-      activeUnit = localStorage.getItem(STORAGE_KEY_UNIT) || "lbs";
+            /* =========================================================
+               APP STATE & STORAGE KEYS
+               ========================================================= */
+            const STORAGE_KEY_ROUTINE = "ironlog_routine_data";
+            const STORAGE_KEY_LOGS    = "ironlog_exercise_logs";
+            const STORAGE_KEY_UNIT    = "ironlog_active_unit";
+            const STORAGE_KEY_DAY     = "ironlog_active_day";
+            const STORAGE_KEY_THEME   = "ironlog_theme_pref";
+            const STORAGE_KEY_HISTORY = "ironlog_history_sessions";
 
-      const savedDay = localStorage.getItem(STORAGE_KEY_DAY);
-      if (savedDay === "tracked" || routine.some(d => d.id === savedDay)) {
-        activeDayId = savedDay;
-      } else {
-        activeDayId = routine[0]?.id || "day-mon";
-      }
+            let routine = [];
+            let exerciseLogs = {};
+            let sessionHistory = [];
+            let activeDayId = "day-mon";
+            let editingDayId = "day-mon";
+            let activeUnit = "lbs";
+            let currentThemeMode = "auto";
+            let editModalMode = "exercises";
 
-      currentThemeMode = localStorage.getItem(STORAGE_KEY_THEME) || "auto";
-      applyTheme(currentThemeMode);
-    }
+            function loadState() {
+              const savedRoutine = localStorage.getItem(STORAGE_KEY_ROUTINE);
+              if (savedRoutine) {
+                try { routine = JSON.parse(savedRoutine); }
+                catch (e) { routine = JSON.parse(JSON.stringify(DEFAULT_ROUTINE)); }
+              } else {
+                routine = JSON.parse(JSON.stringify(DEFAULT_ROUTINE));
+                saveRoutine();
+              }
 
-    function saveRoutine()   { localStorage.setItem(STORAGE_KEY_ROUTINE, JSON.stringify(routine)); }
-    function saveLogs()      { localStorage.setItem(STORAGE_KEY_LOGS, JSON.stringify(exerciseLogs)); }
-    function saveHistory()   { localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(sessionHistory)); }
-    function saveUnit()      { localStorage.setItem(STORAGE_KEY_UNIT, activeUnit); }
-    function saveActiveDay() { localStorage.setItem(STORAGE_KEY_DAY, activeDayId); }
-    function saveThemePref() { localStorage.setItem(STORAGE_KEY_THEME, currentThemeMode); }
+              const savedLogs = localStorage.getItem(STORAGE_KEY_LOGS);
+              if (savedLogs) {
+                try { exerciseLogs = JSON.parse(savedLogs); }
+                catch (e) { exerciseLogs = {}; }
+              } else {
+                exerciseLogs = {};
+              }
 
-    function autoMigrateExistingLogs() {
-      const allExs = [];
-      routine.forEach(d => {
-        if (d.exercises) {
-          const finished = [];
-          d.exercises.forEach(ex => {
-            const log = exerciseLogs[ex.id];
-            if (log && Array.isArray(log.lastSession) && log.lastSession.length > 0) {
-              finished.push({
-                name: ex.name,
-                sets: log.lastSession.map(s => ({ weight: s.weight, reps: s.reps }))
+              const savedHistory = localStorage.getItem(STORAGE_KEY_HISTORY);
+              if (savedHistory) {
+                try { sessionHistory = JSON.parse(savedHistory); }
+                catch (e) { sessionHistory = []; }
+              } else {
+                sessionHistory = [];
+                autoMigrateExistingLogs();
+              }
+
+              activeUnit = localStorage.getItem(STORAGE_KEY_UNIT) || "lbs";
+
+              const savedDay = localStorage.getItem(STORAGE_KEY_DAY);
+              if (savedDay === "tracked" || routine.some(d => d.id === savedDay)) {
+                activeDayId = savedDay;
+              } else {
+                activeDayId = routine[0]?.id || "day-mon";
+              }
+
+              editingDayId = activeDayId === "tracked" ? (routine[0]?.id || "day-mon") : activeDayId;
+              currentThemeMode = localStorage.getItem(STORAGE_KEY_THEME) || "auto";
+              applyTheme(currentThemeMode);
+            }
+
+            function saveRoutine()   { localStorage.setItem(STORAGE_KEY_ROUTINE, JSON.stringify(routine)); }
+            function saveLogs()      { localStorage.setItem(STORAGE_KEY_LOGS, JSON.stringify(exerciseLogs)); }
+            function saveHistory()   { localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(sessionHistory)); }
+            function saveUnit()      { localStorage.setItem(STORAGE_KEY_UNIT, activeUnit); }
+            function saveActiveDay() { localStorage.setItem(STORAGE_KEY_DAY, activeDayId); }
+            function saveThemePref() { localStorage.setItem(STORAGE_KEY_THEME, currentThemeMode); }
+
+            function autoMigrateExistingLogs() {
+              const allExs = [];
+              routine.forEach(d => {
+                if (d.exercises) {
+                  const finished = [];
+                  d.exercises.forEach(ex => {
+                    const log = exerciseLogs[ex.id];
+                    if (log && Array.isArray(log.lastSession) && log.lastSession.length > 0) {
+                      finished.push({
+                        name: ex.name,
+                        sets: log.lastSession.map(s => ({ weight: s.weight, reps: s.reps }))
+                      });
+                    }
+                  });
+                  if (finished.length > 0) allExs.push({ day: d, exercises: finished });
+                }
+              });
+
+              allExs.forEach(item => {
+                sessionHistory.unshift({
+                  id: "sess_migrated_" + item.day.id + "_" + Date.now(),
+                  dateStr: new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }),
+                  timeStr: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                  dayName: item.day.dayName,
+                  dayTitle: item.day.title,
+                  unit: activeUnit,
+                  exercises: item.exercises
+                });
+              });
+              if (sessionHistory.length > 0) saveHistory();
+            }
+
+            function ensureExerciseLog(ex) {
+              if (!exerciseLogs[ex.id]) {
+                exerciseLogs[ex.id] = { currentSets: [], lastSession: null };
+              }
+              const log = exerciseLogs[ex.id];
+              if (!Array.isArray(log.currentSets) || log.currentSets.length === 0) {
+                const count = parseInt(ex.targetSets, 10) || 3;
+                log.currentSets = [];
+                for (let i = 0; i < count; i++) {
+                  log.currentSets.push({ weight: "", reps: "", completed: false });
+                }
+              }
+              return log;
+            }
+
+            /* =========================================================
+               AUTOMATIC + MANUAL THEME ENGINE
+               ========================================================= */
+            const themeToggleBtn = document.getElementById("themeToggleBtn");
+            const themeIconSvg   = document.getElementById("themeIconSvg");
+            const themeLabel     = document.getElementById("themeLabel");
+            const themeColorMeta = document.getElementById("themeColorMeta");
+
+            const ICON_AUTO  = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`;
+            const ICON_MOON  = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+            const ICON_SUN   = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+
+            function isSystemDark() {
+              try { return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches; }
+              catch (e) { return false; }
+            }
+
+            function applyTheme(mode) {
+              const root = document.documentElement;
+              let effectiveDark = false;
+
+              if (mode === "auto") {
+                root.removeAttribute("data-theme");
+                effectiveDark = isSystemDark();
+                themeIconSvg.innerHTML = ICON_AUTO;
+                themeLabel.textContent = "Auto";
+              } else if (mode === "dark") {
+                root.setAttribute("data-theme", "dark");
+                effectiveDark = true;
+                themeIconSvg.innerHTML = ICON_MOON;
+                themeLabel.textContent = "Dark";
+              } else {
+                root.setAttribute("data-theme", "light");
+                effectiveDark = false;
+                themeIconSvg.innerHTML = ICON_SUN;
+                themeLabel.textContent = "Light";
+              }
+
+              if (themeColorMeta) {
+                themeColorMeta.setAttribute("content", effectiveDark ? "#050810" : "#f1f5f9");
+              }
+            }
+
+            try {
+              const darkMQ = window.matchMedia("(prefers-color-scheme: dark)");
+              const onSystemThemeChange = () => { if (currentThemeMode === "auto") applyTheme("auto"); };
+              if (typeof darkMQ.addEventListener === "function") darkMQ.addEventListener("change", onSystemThemeChange);
+              else if (typeof darkMQ.addListener === "function") darkMQ.addListener(onSystemThemeChange);
+            } catch (e) {}
+
+            window.addEventListener("focus", () => { if (currentThemeMode === "auto") applyTheme("auto"); });
+            document.addEventListener("visibilitychange", () => { if (!document.hidden && currentThemeMode === "auto") applyTheme("auto"); });
+
+            themeToggleBtn.addEventListener("click", () => {
+              if (currentThemeMode === "auto") {
+                currentThemeMode = "dark";
+                showToast("Theme locked: Dark Mode");
+              } else if (currentThemeMode === "dark") {
+                currentThemeMode = "light";
+                showToast("Theme locked: Light Mode");
+              } else {
+                currentThemeMode = "auto";
+                showToast("Theme: Auto (Syncs with Phone)");
+              }
+              saveThemePref();
+              applyTheme(currentThemeMode);
+            });
+
+            /* =========================================================
+               HELPER CALCULATORS: 1RM & PLATE COUNTER MATCHER
+               ========================================================= */
+            function calc1RM(weightStr, repsStr) {
+              const w = parseFloat(weightStr);
+              const r = parseFloat(repsStr);
+              if (!w || w <= 0 || !r || r <= 0) return 0;
+              if (r === 1) return Math.round(w);
+              return Math.round(w * (1 + r / 30));
+            }
+
+            function getBestExercise1RM(exId) {
+              const log = exerciseLogs[exId];
+              if (!log) return 0;
+              let max1RM = 0;
+
+              if (Array.isArray(log.currentSets)) {
+                log.currentSets.forEach(s => {
+                  const orm = calc1RM(s.weight, s.reps);
+                  if (orm > max1RM) max1RM = orm;
+                });
+              }
+
+              if (max1RM === 0 && Array.isArray(log.lastSession)) {
+                log.lastSession.forEach(s => {
+                  const orm = calc1RM(s.weight, s.reps);
+                  if (orm > max1RM) max1RM = orm;
+                });
+              }
+              return max1RM;
+            }
+
+            function shouldShowPlateCounter(ex) {
+              if (ex.enablePlateCounter === true) return true;
+              if (ex.enablePlateCounter === false) return false;
+              const n = (ex.name || "").toLowerCase();
+              return (
+                n.includes("incline dumbbell bench") ||
+                n.includes("barbell back squat") ||
+                n.includes("romanian deadlift") ||
+                n.includes("flat barbell bench press") ||
+                n.includes("conventional barbell deadlift")
+              );
+            }
+
+            /* =========================================================
+               DOM REFERENCES
+               ========================================================= */
+            const dayNav               = document.getElementById("dayNav");
+            const routineHeaderCard    = document.getElementById("routineHeaderCard");
+            const dayTitleText         = document.getElementById("dayTitleText");
+            const dayFocusText         = document.getElementById("dayFocusText");
+            const progressSetsText     = document.getElementById("progressSetsText");
+            const progressVolText      = document.getElementById("progressVolText");
+            const progressBarFill      = document.getElementById("progressBarFill");
+            const mainContainer        = document.getElementById("mainContainer");
+            const unitToggleBtn        = document.getElementById("unitToggleBtn");
+            const unitLabel            = document.getElementById("unitLabel");
+            const startFreshBtn        = document.getElementById("startFreshBtn");
+            const toast                = document.getElementById("toast");
+
+            // Plate Modal
+            const plateModal           = document.getElementById("plateModal");
+            const plateModalTitle      = document.getElementById("plateModalTitle");
+            const plateModalSub        = document.getElementById("plateModalSub");
+            const closePlateModalBtn   = document.getElementById("closePlateModalBtn");
+            const plateTotalVal        = document.getElementById("plateTotalVal");
+            const plateTotalUnit       = document.getElementById("plateTotalUnit");
+            const plateBreakdownText   = document.getElementById("plateBreakdownText");
+            const barbellVisualArea    = document.getElementById("barbellVisualArea");
+            const baseSelectorPills    = document.getElementById("baseSelectorPills");
+            const quickSteppersRow     = document.getElementById("quickSteppersRow");
+            const barbellPlatesControls= document.getElementById("barbellPlatesControls");
+            const platesGrid           = document.getElementById("platesGrid");
+            const clearPlatesBtn       = document.getElementById("clearPlatesBtn");
+            const dumbbellQuickGridWrap= document.getElementById("dumbbellQuickGridWrap");
+            const dumbbellQuickGrid    = document.getElementById("dumbbellQuickGrid");
+            const applyPlateSetBtn     = document.getElementById("applyPlateSetBtn");
+            const applyPlateAllBtn     = document.getElementById("applyPlateAllBtn");
+
+            // Edit Routine & Days Modal
+            const editRoutineModal     = document.getElementById("editRoutineModal");
+            const openEditRoutineBtn   = document.getElementById("openEditRoutineBtn");
+            const closeEditRoutineBtn  = document.getElementById("closeEditRoutineBtn");
+            const editRoutineModalTitle= document.getElementById("editRoutineModalTitle");
+            const tabExercisesBtn      = document.getElementById("tabExercisesBtn");
+            const tabDaysBtn           = document.getElementById("tabDaysBtn");
+            const editExercisesSection = document.getElementById("editExercisesSection");
+            const editDaysSection      = document.getElementById("editDaysSection");
+            const editModalDayPicker   = document.getElementById("editModalDayPicker");
+            const editingDayHint       = document.getElementById("editingDayHint");
+            const editExerciseList     = document.getElementById("editExerciseList");
+            const editDaysList         = document.getElementById("editDaysList");
+            const openAddExerciseBtn   = document.getElementById("openAddExerciseBtn");
+            const openAddDayBtn        = document.getElementById("openAddDayBtn");
+
+            // Add / Edit Exercise Modal
+            const exerciseFormModal    = document.getElementById("exerciseFormModal");
+            const exerciseFormTitle    = document.getElementById("exerciseFormTitle");
+            const closeExerciseFormBtn = document.getElementById("closeExerciseFormBtn");
+            const cancelExerciseFormBtn= document.getElementById("cancelExerciseFormBtn");
+            const saveExerciseFormBtn  = document.getElementById("saveExerciseFormBtn");
+            const editExId             = document.getElementById("editExId");
+            const exNameInput          = document.getElementById("exNameInput");
+            const exSetsInput          = document.getElementById("exSetsInput");
+            const exRepsInput          = document.getElementById("exRepsInput");
+            const exCueInput           = document.getElementById("exCueInput");
+            const exPlateToggleInput   = document.getElementById("exPlateToggleInput");
+
+            // Add / Edit Day Modal
+            const dayFormModal         = document.getElementById("dayFormModal");
+            const dayFormTitle         = document.getElementById("dayFormTitle");
+            const closeDayFormBtn      = document.getElementById("closeDayFormBtn");
+            const cancelDayFormBtn     = document.getElementById("cancelDayFormBtn");
+            const saveDayFormBtn       = document.getElementById("saveDayFormBtn");
+            const editDayId            = document.getElementById("editDayId");
+            const dayTabNameInput      = document.getElementById("dayTabNameInput");
+            const dayTitleInput        = document.getElementById("dayTitleInput");
+            const dayFocusInput        = document.getElementById("dayFocusInput");
+
+            // Backup Modal
+            const backupModal          = document.getElementById("backupModal");
+            const openBackupBtn        = document.getElementById("openBackupBtn");
+            const closeBackupBtn       = document.getElementById("closeBackupBtn");
+            const exportFileBtn        = document.getElementById("exportFileBtn");
+            const copyJsonBtn          = document.getElementById("copyJsonBtn");
+            const importFileInput      = document.getElementById("importFileInput");
+            const pasteJsonInput       = document.getElementById("pasteJsonInput");
+            const importPastedBtn      = document.getElementById("importPastedBtn");
+            const resetDefaultsBtn     = document.getElementById("resetDefaultsBtn");
+
+            let toastTimeout = null;
+            function showToast(message) {
+              if (toastTimeout) clearTimeout(toastTimeout);
+              toast.textContent = message;
+              toast.classList.add("show");
+              toastTimeout = setTimeout(() => toast.classList.remove("show"), 2400);
+            }
+
+            /* =========================================================
+               RENDERERS
+               ========================================================= */
+            function renderApp() {
+              unitLabel.textContent = activeUnit.toUpperCase();
+              renderDayTabs();
+
+              if (activeDayId === "tracked") {
+                routineHeaderCard.style.display = "none";
+                renderTrackedHistory();
+              } else {
+                routineHeaderCard.style.display = "block";
+                renderCurrentDay();
+                updateDayProgressBar();
+              }
+            }
+
+            function renderDayTabs() {
+              dayNav.innerHTML = "";
+              routine.forEach(day => {
+                const btn = document.createElement("button");
+                btn.className = `day-pill ${day.id === activeDayId ? "active" : ""}`;
+                btn.textContent = day.dayName;
+                btn.addEventListener("click", () => {
+                  if (activeDayId !== day.id) {
+                    activeDayId = day.id;
+                    saveActiveDay();
+                    renderApp();
+                  }
+                });
+                dayNav.appendChild(btn);
+              });
+
+              const historyBtn = document.createElement("button");
+              historyBtn.className = `day-pill ${activeDayId === "tracked" ? "active" : ""}`;
+              historyBtn.textContent = "Tracked";
+              historyBtn.addEventListener("click", () => {
+                if (activeDayId !== "tracked") {
+                  activeDayId = "tracked";
+                  saveActiveDay();
+                  renderApp();
+                }
+              });
+              dayNav.appendChild(historyBtn);
+
+              const activePill = dayNav.querySelector(".day-pill.active");
+              if (activePill && activePill.scrollIntoView) {
+                activePill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+              }
+            }
+
+            function updateDayProgressBar() {
+              const currentDay = routine.find(d => d.id === activeDayId);
+              if (!currentDay) return;
+
+              let totalSets = 0;
+              let doneSets  = 0;
+              let totalVol  = 0;
+
+              currentDay.exercises.forEach(ex => {
+                const log = exerciseLogs[ex.id];
+                if (log && Array.isArray(log.currentSets)) {
+                  totalSets += log.currentSets.length;
+                  log.currentSets.forEach(s => {
+                    if (s.completed) {
+                      doneSets++;
+                      const w = parseFloat(s.weight) || 0;
+                      const r = parseFloat(s.reps) || 0;
+                      totalVol += w * r;
+                    }
+                  });
+                }
+              });
+
+              progressSetsText.textContent = `${doneSets} / ${totalSets} sets`;
+              progressVolText.textContent  = `${Math.round(totalVol).toLocaleString()} ${activeUnit}`;
+              const pct = totalSets > 0 ? Math.round((doneSets / totalSets) * 100) : 0;
+              progressBarFill.style.width = `${pct}%`;
+              progressBarFill.classList.toggle("complete", pct === 100 && totalSets > 0);
+            }
+
+            function formatLastSessionString(lastSets) {
+              if (!lastSets || !Array.isArray(lastSets) || lastSets.length === 0) return "None recorded";
+              const validSets = lastSets.filter(s => s.weight !== "" || s.reps !== "");
+              if (validSets.length === 0) return "None recorded";
+
+              const weights = validSets.map(s => s.weight).filter(w => w !== "");
+              const allWeightsEqual = weights.length > 0 && weights.every(w => w === weights[0]);
+
+              if (allWeightsEqual && weights[0] !== undefined) {
+                const repsSummary = validSets.map(s => s.reps || "0").join(", ");
+                return `${weights[0]} ${activeUnit} × ${repsSummary}`;
+              }
+              return validSets.map(s => `${s.weight || "0"}×${s.reps || "0"}`).join(", ") + ` ${activeUnit}`;
+            }
+
+            function updateExercise1RMBadge(exId) {
+              const el = document.getElementById(`orm-badge-${exId}`);
+              if (!el) return;
+              const best = getBestExercise1RM(exId);
+              if (best > 0) {
+                el.style.display = "inline-flex";
+                el.innerHTML = `⚡ Est. 1RM: ${best} ${activeUnit}`;
+              } else {
+                el.style.display = "none";
+              }
+            }
+
+            function renderCurrentDay() {
+              const currentDay = routine.find(d => d.id === activeDayId) || routine[0];
+              if (!currentDay) {
+                mainContainer.innerHTML = `<div class="empty-state">No workout days configured. Tap the Edit button (✏️) to add a workout day.</div>`;
+                return;
+              }
+
+              dayTitleText.textContent = currentDay.title || currentDay.dayName;
+              dayFocusText.textContent = currentDay.focus || "Workout";
+              mainContainer.innerHTML = "";
+
+              if (!currentDay.exercises || currentDay.exercises.length === 0) {
+                mainContainer.innerHTML = `
+                  <div class="empty-state">
+                    <p>No exercises scheduled for ${escapeHtml(currentDay.dayName)}.</p>
+                    <button class="btn btn-primary" onclick="editingDayId = activeDayId; openExerciseModalForAdd();" style="margin-top: 12px;">+ Add Exercise</button>
+                  </div>
+                `;
+                return;
+              }
+
+              currentDay.exercises.forEach(ex => {
+                const log = ensureExerciseLog(ex);
+                const card = document.createElement("div");
+                card.className = "exercise-card";
+                card.id = `card-${ex.id}`;
+
+                const lastSessionText = formatLastSessionString(log.lastSession);
+                const best1RM = getBestExercise1RM(ex.id);
+                const usePlates = shouldShowPlateCounter(ex);
+
+                card.innerHTML = `
+                  <div class="exercise-header">
+                    <div class="exercise-name">${escapeHtml(ex.name)}</div>
+                    <div class="exercise-target">${ex.targetSets} × ${escapeHtml(ex.targetReps)}</div>
+                  </div>
+                  ${ex.cue ? `<div class="exercise-cue">${escapeHtml(ex.cue)}</div>` : ""}
+
+                  <div class="stats-badges-row">
+                    <div class="stat-pill">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                      </svg>
+                      <span>Last: <b>${escapeHtml(lastSessionText)}</b></span>
+                    </div>
+                    <div class="stat-pill orm-pill" id="orm-badge-${ex.id}" style="${best1RM > 0 ? "" : "display:none;"}">
+                      ⚡ Est. 1RM: ${best1RM} ${activeUnit}
+                    </div>
+                  </div>
+
+                  <div class="sets-table">
+                    <div class="set-header">
+                      <span>Set</span>
+                      <span>${activeUnit.toUpperCase()}</span>
+                      <span>Reps</span>
+                      <span>Done</span>
+                      <span></span>
+                    </div>
+                    <div class="set-rows-list" id="sets-list-${ex.id}"></div>
+                  </div>
+
+                  <button class="add-set-btn" data-exid="${ex.id}">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Add Set
+                  </button>
+                `;
+
+                const setsList = card.querySelector(`#sets-list-${ex.id}`);
+                renderSetRows(ex, setsList, usePlates);
+
+                card.querySelector(".add-set-btn").addEventListener("click", () => {
+                  addNewSet(ex, usePlates);
+                });
+
+                mainContainer.appendChild(card);
               });
             }
-          });
-          if (finished.length > 0) {
-            allExs.push({ day: d, exercises: finished });
-          }
-        }
-      });
 
-      allExs.forEach(item => {
-        sessionHistory.unshift({
-          id: "sess_migrated_" + item.day.id + "_" + Date.now(),
-          dateStr: new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }),
-          timeStr: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          dayName: item.day.dayName,
-          dayTitle: item.day.title,
-          unit: activeUnit,
-          exercises: item.exercises
-        });
-      });
+            function renderSetRows(ex, container, usePlates) {
+              container.innerHTML = "";
+              const log = exerciseLogs[ex.id];
+              if (!log || !log.currentSets) return;
 
-      if (sessionHistory.length > 0) saveHistory();
-    }
+              log.currentSets.forEach((set, index) => {
+                const row = document.createElement("div");
+                row.className = `set-row ${set.completed ? "completed" : ""}`;
+                row.id = `row-${ex.id}-${index}`;
 
-    function ensureExerciseLog(ex) {
-      if (!exerciseLogs[ex.id]) {
-        exerciseLogs[ex.id] = { currentSets: [], lastSession: null };
-      }
-      const log = exerciseLogs[ex.id];
-      if (!Array.isArray(log.currentSets) || log.currentSets.length === 0) {
-        const count = parseInt(ex.targetSets, 10) || 3;
-        log.currentSets = [];
-        for (let i = 0; i < count; i++) {
-          log.currentSets.push({ weight: "", reps: "", completed: false });
-        }
-      }
-      return log;
-    }
+                const weightHtml = usePlates
+                  ? `<div class="weight-box">
+                       <input type="number" step="any" inputmode="decimal" class="set-input weight-input" placeholder="0" value="${set.weight !== undefined ? set.weight : ""}" />
+                       <button type="button" class="plate-trigger-btn" title="Open Plate Counter">
+                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                           <circle cx="12" cy="12" r="9"/>
+                           <circle cx="12" cy="12" r="3"/>
+                         </svg>
+                       </button>
+                     </div>`
+                  : `<input type="number" step="any" inputmode="decimal" class="set-input weight-input" placeholder="0" value="${set.weight !== undefined ? set.weight : ""}" />`;
 
-    /* =========================================================
-       AUTOMATIC + MANUAL THEME ENGINE
-       ========================================================= */
-    const themeToggleBtn = document.getElementById("themeToggleBtn");
-    const themeIconSvg   = document.getElementById("themeIconSvg");
-    const themeLabel     = document.getElementById("themeLabel");
-    const themeColorMeta = document.getElementById("themeColorMeta");
+                row.innerHTML = `
+                  <div class="set-number">${index + 1}</div>
+                  <div>${weightHtml}</div>
+                  <div>
+                    <input type="number" inputmode="numeric" class="set-input reps-input" placeholder="0" value="${set.reps !== undefined ? set.reps : ""}" />
+                  </div>
+                  <div>
+                    <button type="button" class="btn-complete" title="Complete set">
+                      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+                  <div>
+                    <button type="button" class="btn-del-set" title="Remove set">&times;</button>
+                  </div>
+                `;
 
-    const ICON_AUTO  = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`;
-    const ICON_MOON  = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
-    const ICON_SUN   = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+                row.querySelector(".weight-input").addEventListener("input", (e) => {
+                  exerciseLogs[ex.id].currentSets[index].weight = e.target.value.trim();
+                  saveLogs();
+                  updateExercise1RMBadge(ex.id);
+                  updateDayProgressBar();
+                });
 
-    function isSystemDark() {
-      try {
-        return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      } catch (e) {
-        return false;
-      }
-    }
+                row.querySelector(".reps-input").addEventListener("input", (e) => {
+                  exerciseLogs[ex.id].currentSets[index].reps = e.target.value.trim();
+                  saveLogs();
+                  updateExercise1RMBadge(ex.id);
+                  updateDayProgressBar();
+                });
 
-    function applyTheme(mode) {
-      const root = document.documentElement;
-      let effectiveDark = false;
+                if (usePlates) {
+                  row.querySelector(".plate-trigger-btn").addEventListener("click", () => {
+                    openPlateCounter(ex, index);
+                  });
+                }
 
-      if (mode === "auto") {
-        root.removeAttribute("data-theme");
-        effectiveDark = isSystemDark();
-        themeIconSvg.innerHTML = ICON_AUTO;
-        themeLabel.textContent = "Auto";
-      } else if (mode === "dark") {
-        root.setAttribute("data-theme", "dark");
-        effectiveDark = true;
-        themeIconSvg.innerHTML = ICON_MOON;
-        themeLabel.textContent = "Dark";
-      } else {
-        root.setAttribute("data-theme", "light");
-        effectiveDark = false;
-        themeIconSvg.innerHTML = ICON_SUN;
-        themeLabel.textContent = "Light";
-      }
+                row.querySelector(".btn-complete").addEventListener("click", () => {
+                  const isDone = !exerciseLogs[ex.id].currentSets[index].completed;
+                  exerciseLogs[ex.id].currentSets[index].completed = isDone;
+                  saveLogs();
+                  row.classList.toggle("completed", isDone);
+                  updateDayProgressBar();
+                });
 
-      if (themeColorMeta) {
-        themeColorMeta.setAttribute("content", effectiveDark ? "#050810" : "#f1f5f9");
-      }
-    }
+                row.querySelector(".btn-del-set").addEventListener("click", () => {
+                  if (exerciseLogs[ex.id].currentSets.length <= 1) {
+                    showToast("Each exercise needs at least 1 set.");
+                    return;
+                  }
+                  exerciseLogs[ex.id].currentSets.splice(index, 1);
+                  saveLogs();
+                  renderSetRows(ex, container, usePlates);
+                  updateExercise1RMBadge(ex.id);
+                  updateDayProgressBar();
+                });
 
-    // Safe real-time theme listeners (handles modern + legacy Android WebViews)
-    try {
-      const darkMQ = window.matchMedia("(prefers-color-scheme: dark)");
-      const onSystemThemeChange = () => {
-        if (currentThemeMode === "auto") applyTheme("auto");
-      };
-      if (typeof darkMQ.addEventListener === "function") {
-        darkMQ.addEventListener("change", onSystemThemeChange);
-      } else if (typeof darkMQ.addListener === "function") {
-        darkMQ.addListener(onSystemThemeChange);
-      }
-    } catch (e) {}
-
-    window.addEventListener("focus", () => {
-      if (currentThemeMode === "auto") applyTheme("auto");
-    });
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden && currentThemeMode === "auto") applyTheme("auto");
-    });
-
-    themeToggleBtn.addEventListener("click", () => {
-      if (currentThemeMode === "auto") {
-        currentThemeMode = "dark";
-        showToast("Theme locked: Dark Mode");
-      } else if (currentThemeMode === "dark") {
-        currentThemeMode = "light";
-        showToast("Theme locked: Light Mode");
-      } else {
-        currentThemeMode = "auto";
-        showToast("Theme: Auto (Syncs with Phone)");
-      }
-      saveThemePref();
-      applyTheme(currentThemeMode);
-    });
-
-    /* =========================================================
-       HELPER CALCULATORS: 1RM & PLATE COUNTER MATCHER
-       ========================================================= */
-    function calc1RM(weightStr, repsStr) {
-      const w = parseFloat(weightStr);
-      const r = parseFloat(repsStr);
-      if (!w || w <= 0 || !r || r <= 0) return 0;
-      if (r === 1) return Math.round(w);
-      return Math.round(w * (1 + r / 30)); // Epley Formula
-    }
-
-    function getBestExercise1RM(exId) {
-      const log = exerciseLogs[exId];
-      if (!log) return 0;
-      let max1RM = 0;
-
-      if (Array.isArray(log.currentSets)) {
-        log.currentSets.forEach(s => {
-          const orm = calc1RM(s.weight, s.reps);
-          if (orm > max1RM) max1RM = orm;
-        });
-      }
-
-      if (max1RM === 0 && Array.isArray(log.lastSession)) {
-        log.lastSession.forEach(s => {
-          const orm = calc1RM(s.weight, s.reps);
-          if (orm > max1RM) max1RM = orm;
-        });
-      }
-      return max1RM;
-    }
-
-    // Check if an exercise should show the Plate & Weight Counter
-    function shouldShowPlateCounter(ex) {
-      if (ex.enablePlateCounter === true) return true;
-      if (ex.enablePlateCounter === false) return false;
-      const n = (ex.name || "").toLowerCase();
-      return (
-        n.includes("incline dumbbell bench") ||
-        n.includes("barbell back squat") ||
-        n.includes("romanian deadlift") ||
-        n.includes("flat barbell bench press") ||
-        n.includes("conventional barbell deadlift")
-      );
-    }
-
-    /* =========================================================
-       DOM REFERENCES
-       ========================================================= */
-    const dayNav               = document.getElementById("dayNav");
-    const routineHeaderCard    = document.getElementById("routineHeaderCard");
-    const dayTitleText         = document.getElementById("dayTitleText");
-    const dayFocusText         = document.getElementById("dayFocusText");
-    const progressSetsText     = document.getElementById("progressSetsText");
-    const progressVolText      = document.getElementById("progressVolText");
-    const progressBarFill      = document.getElementById("progressBarFill");
-    const mainContainer        = document.getElementById("mainContainer");
-    const unitToggleBtn        = document.getElementById("unitToggleBtn");
-    const unitLabel            = document.getElementById("unitLabel");
-    const startFreshBtn        = document.getElementById("startFreshBtn");
-    const toast                = document.getElementById("toast");
-
-    // Plate Counter Modal Elements
-    const plateModal           = document.getElementById("plateModal");
-    const plateModalTitle      = document.getElementById("plateModalTitle");
-    const plateModalSub        = document.getElementById("plateModalSub");
-    const closePlateModalBtn   = document.getElementById("closePlateModalBtn");
-    const plateTotalVal        = document.getElementById("plateTotalVal");
-    const plateTotalUnit       = document.getElementById("plateTotalUnit");
-    const plateBreakdownText   = document.getElementById("plateBreakdownText");
-    const barbellVisualArea    = document.getElementById("barbellVisualArea");
-    const baseSelectorPills    = document.getElementById("baseSelectorPills");
-    const quickSteppersRow     = document.getElementById("quickSteppersRow");
-    const barbellPlatesControls= document.getElementById("barbellPlatesControls");
-    const platesGrid           = document.getElementById("platesGrid");
-    const clearPlatesBtn       = document.getElementById("clearPlatesBtn");
-    const dumbbellQuickGridWrap= document.getElementById("dumbbellQuickGridWrap");
-    const dumbbellQuickGrid    = document.getElementById("dumbbellQuickGrid");
-    const applyPlateSetBtn     = document.getElementById("applyPlateSetBtn");
-    const applyPlateAllBtn     = document.getElementById("applyPlateAllBtn");
-
-    // Edit Routine Modal
-    const editRoutineModal     = document.getElementById("editRoutineModal");
-    const openEditRoutineBtn   = document.getElementById("openEditRoutineBtn");
-    const closeEditRoutineBtn  = document.getElementById("closeEditRoutineBtn");
-    const editExerciseList     = document.getElementById("editExerciseList");
-    const editRoutineModalTitle= document.getElementById("editRoutineModalTitle");
-    const openAddExerciseBtn   = document.getElementById("openAddExerciseBtn");
-
-    // Add / Edit Exercise Modal
-    const exerciseFormModal    = document.getElementById("exerciseFormModal");
-    const exerciseFormTitle    = document.getElementById("exerciseFormTitle");
-    const closeExerciseFormBtn = document.getElementById("closeExerciseFormBtn");
-    const cancelExerciseFormBtn= document.getElementById("cancelExerciseFormBtn");
-    const saveExerciseFormBtn  = document.getElementById("saveExerciseFormBtn");
-    const editExId             = document.getElementById("editExId");
-    const exNameInput          = document.getElementById("exNameInput");
-    const exSetsInput          = document.getElementById("exSetsInput");
-    const exRepsInput          = document.getElementById("exRepsInput");
-    const exCueInput           = document.getElementById("exCueInput");
-    const exPlateToggleInput   = document.getElementById("exPlateToggleInput");
-
-    // Backup Modal
-    const backupModal          = document.getElementById("backupModal");
-    const openBackupBtn        = document.getElementById("openBackupBtn");
-    const closeBackupBtn       = document.getElementById("closeBackupBtn");
-    const exportFileBtn        = document.getElementById("exportFileBtn");
-    const copyJsonBtn          = document.getElementById("copyJsonBtn");
-    const importFileInput      = document.getElementById("importFileInput");
-    const pasteJsonInput       = document.getElementById("pasteJsonInput");
-    const importPastedBtn      = document.getElementById("importPastedBtn");
-    const resetDefaultsBtn     = document.getElementById("resetDefaultsBtn");
-
-    let toastTimeout = null;
-    function showToast(message) {
-      if (toastTimeout) clearTimeout(toastTimeout);
-      toast.textContent = message;
-      toast.classList.add("show");
-      toastTimeout = setTimeout(() => toast.classList.remove("show"), 2400);
-    }
-
-    /* =========================================================
-       RENDERERS
-       ========================================================= */
-    function renderApp() {
-      unitLabel.textContent = activeUnit.toUpperCase();
-      renderDayTabs();
-
-      if (activeDayId === "tracked") {
-        routineHeaderCard.style.display = "none";
-        openEditRoutineBtn.style.display = "none";
-        renderTrackedHistory();
-      } else {
-        routineHeaderCard.style.display = "block";
-        openEditRoutineBtn.style.display = "inline-flex";
-        renderCurrentDay();
-        updateDayProgressBar();
-      }
-    }
-
-    function renderDayTabs() {
-      dayNav.innerHTML = "";
-      routine.forEach(day => {
-        const btn = document.createElement("button");
-        btn.className = `day-pill ${day.id === activeDayId ? "active" : ""}`;
-        btn.textContent = day.dayName;
-        btn.addEventListener("click", () => {
-          if (activeDayId !== day.id) {
-            activeDayId = day.id;
-            saveActiveDay();
-            renderApp();
-          }
-        });
-        dayNav.appendChild(btn);
-      });
-
-      const historyBtn = document.createElement("button");
-      historyBtn.className = `day-pill ${activeDayId === "tracked" ? "active" : ""}`;
-      historyBtn.textContent = "Tracked";
-      historyBtn.addEventListener("click", () => {
-        if (activeDayId !== "tracked") {
-          activeDayId = "tracked";
-          saveActiveDay();
-          renderApp();
-        }
-      });
-      dayNav.appendChild(historyBtn);
-    }
-
-    function updateDayProgressBar() {
-      const currentDay = routine.find(d => d.id === activeDayId);
-      if (!currentDay) return;
-
-      let totalSets = 0;
-      let doneSets  = 0;
-      let totalVol  = 0;
-
-      currentDay.exercises.forEach(ex => {
-        const log = exerciseLogs[ex.id];
-        if (log && Array.isArray(log.currentSets)) {
-          totalSets += log.currentSets.length;
-          log.currentSets.forEach(s => {
-            if (s.completed) {
-              doneSets++;
-              const w = parseFloat(s.weight) || 0;
-              const r = parseFloat(s.reps) || 0;
-              totalVol += w * r;
+                container.appendChild(row);
+              });
             }
-          });
-        }
-      });
 
-      progressSetsText.textContent = `${doneSets} / ${totalSets} sets`;
-      progressVolText.textContent  = `${Math.round(totalVol).toLocaleString()} ${activeUnit}`;
-      const pct = totalSets > 0 ? Math.round((doneSets / totalSets) * 100) : 0;
-      progressBarFill.style.width = `${pct}%`;
-      if (pct === 100 && totalSets > 0) {
-        progressBarFill.classList.add("complete");
-      } else {
-        progressBarFill.classList.remove("complete");
-      }
-    }
+            function addNewSet(ex, usePlates) {
+              const log = exerciseLogs[ex.id];
+              if (!log) return;
+              const prevSet = log.currentSets[log.currentSets.length - 1];
+              log.currentSets.push({
+                weight: prevSet ? prevSet.weight : "",
+                reps: "",
+                completed: false
+              });
+              saveLogs();
+              const container = document.getElementById(`sets-list-${ex.id}`);
+              if (container) renderSetRows(ex, container, usePlates);
+              updateDayProgressBar();
+            }
 
-    function formatLastSessionString(lastSets) {
-      if (!lastSets || !Array.isArray(lastSets) || lastSets.length === 0) return "None recorded";
-      const validSets = lastSets.filter(s => s.weight !== "" || s.reps !== "");
-      if (validSets.length === 0) return "None recorded";
+            /* =========================================================
+               INTERACTIVE PLATE & WEIGHT COUNTER
+               ========================================================= */
+            let plateCtx = { ex: null, setIndex: 0, baseWeight: 45, totalWeight: 135 };
 
-      const weights = validSets.map(s => s.weight).filter(w => w !== "");
-      const allWeightsEqual = weights.length > 0 && weights.every(w => w === weights[0]);
+            function getPlateConfig() {
+              if (activeUnit === "kg") {
+                return {
+                  bases: [{ label: "Bar (20 kg)", val: 20 }, { label: "Light (10 kg)", val: 10 }, { label: "Dumbbell (0)", val: 0 }],
+                  plates: [25, 20, 15, 10, 5, 2.5],
+                  steppers: [-10, -5, -2.5, 2.5, 5, 10],
+                  dbPresets: [7.5, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27.5, 30, 35, 40],
+                  colors: { 25: "#dc2626", 20: "#2563eb", 15: "#ca8a04", 10: "#16a34a", 5: "#64748b", 2.5: "#475569" },
+                  heights: { 25: 72, 20: 66, 15: 58, 10: 50, 5: 40, 2.5: 32 }
+                };
+              }
+              return {
+                bases: [{ label: "Barbell (45)", val: 45 }, { label: "Light (25)", val: 25 }, { label: "Dumbbell (0)", val: 0 }],
+                plates: [45, 35, 25, 10, 5, 2.5],
+                steppers: [-10, -5, -2.5, 2.5, 5, 10],
+                dbPresets: [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90],
+                colors: { 45: "#2563eb", 35: "#ca8a04", 25: "#16a34a", 10: "#64748b", 5: "#dc2626", 2.5: "#475569" },
+                heights: { 45: 72, 35: 64, 25: 56, 10: 46, 5: 38, 2.5: 30 }
+              };
+            }
 
-      if (allWeightsEqual && weights[0] !== undefined) {
-        const repsSummary = validSets.map(s => s.reps || "0").join(", ");
-        return `${weights[0]} ${activeUnit} × ${repsSummary}`;
-      }
-      return validSets.map(s => `${s.weight || "0"}×${s.reps || "0"}`).join(", ") + ` ${activeUnit}`;
-    }
+            function openPlateCounter(ex, setIndex) {
+              const log = exerciseLogs[ex.id];
+              const currentVal = parseFloat(log.currentSets[setIndex].weight) || 0;
+              const cfg = getPlateConfig();
 
-    function updateExercise1RMBadge(exId) {
-      const el = document.getElementById(`orm-badge-${exId}`);
-      if (!el) return;
-      const best = getBestExercise1RM(exId);
-      if (best > 0) {
-        el.style.display = "inline-flex";
-        el.innerHTML = `⚡ Est. 1RM: ${best} ${activeUnit}`;
-      } else {
-        el.style.display = "none";
-      }
-    }
+              plateCtx.ex = ex;
+              plateCtx.setIndex = setIndex;
 
-    function renderCurrentDay() {
-      const currentDay = routine.find(d => d.id === activeDayId) || routine[0];
-      if (!currentDay) {
-        mainContainer.innerHTML = `<div class="empty-state">No workout found.</div>`;
-        return;
-      }
+              const isDumbbell = (ex.name || "").toLowerCase().includes("dumbbell");
+              if (isDumbbell && !(ex.name || "").toLowerCase().includes("or barbell")) {
+                plateCtx.baseWeight = 0;
+                plateCtx.totalWeight = currentVal > 0 ? currentVal : (activeUnit === "kg" ? 15 : 35);
+              } else {
+                plateCtx.baseWeight = cfg.bases[0].val;
+                if (currentVal > 0 && currentVal < plateCtx.baseWeight) {
+                  plateCtx.baseWeight = 0;
+                  plateCtx.totalWeight = currentVal;
+                } else {
+                  plateCtx.totalWeight = currentVal > 0 ? currentVal : plateCtx.baseWeight;
+                }
+              }
 
-      dayTitleText.textContent = currentDay.title || currentDay.dayName;
-      dayFocusText.textContent = currentDay.focus || "Workout";
-      mainContainer.innerHTML = "";
+              plateModalTitle.textContent = `Set ${setIndex + 1} Weight`;
+              plateModalSub.textContent = ex.name;
+              applyPlateSetBtn.textContent = `Apply to Set ${setIndex + 1}`;
 
-      if (!currentDay.exercises || currentDay.exercises.length === 0) {
-        mainContainer.innerHTML = `
-          <div class="empty-state">
-            <p>No exercises scheduled for this day.</p>
-            <button class="btn btn-primary" onclick="openExerciseModalForAdd()" style="margin-top: 12px;">+ Add Exercise</button>
-          </div>
-        `;
-        return;
-      }
+              renderPlateModalUI();
+              plateModal.classList.add("open");
+            }
 
-      currentDay.exercises.forEach(ex => {
-        const log = ensureExerciseLog(ex);
-        const card = document.createElement("div");
-        card.className = "exercise-card";
-        card.id = `card-${ex.id}`;
+            function calculatePlatesPerSide(total, base, plateSizes) {
+              let perSide = (total - base) / 2;
+              if (perSide <= 0) return { plates: [], remainder: 0 };
+              const result = [];
+              for (const p of plateSizes) {
+                while (perSide >= p - 0.001) {
+                  result.push(p);
+                  perSide -= p;
+                }
+              }
+              return { plates: result, remainder: Math.round(perSide * 100) / 100 };
+            }
 
-        const lastSessionText = formatLastSessionString(log.lastSession);
-        const best1RM = getBestExercise1RM(ex.id);
-        const usePlates = shouldShowPlateCounter(ex);
+            function renderPlateModalUI() {
+              const cfg = getPlateConfig();
+              plateTotalVal.textContent = Number.isInteger(plateCtx.totalWeight)
+                ? plateCtx.totalWeight
+                : plateCtx.totalWeight.toFixed(1);
+              plateTotalUnit.textContent = activeUnit;
 
-        card.innerHTML = `
-          <div class="exercise-header">
-            <div class="exercise-name">${escapeHtml(ex.name)}</div>
-            <div class="exercise-target">${ex.targetSets} × ${escapeHtml(ex.targetReps)}</div>
-          </div>
-          ${ex.cue ? `<div class="exercise-cue">${escapeHtml(ex.cue)}</div>` : ""}
-          
-          <div class="stats-badges-row">
-            <div class="stat-pill">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-              <span>Last: <b>${escapeHtml(lastSessionText)}</b></span>
-            </div>
-            <div class="stat-pill orm-pill" id="orm-badge-${ex.id}" style="${best1RM > 0 ? "" : "display:none;"}">
-              ⚡ Est. 1RM: ${best1RM} ${activeUnit}
-            </div>
-          </div>
+              baseSelectorPills.innerHTML = "";
+              cfg.bases.forEach(b => {
+                const btn = document.createElement("button");
+                btn.className = `base-pill ${plateCtx.baseWeight === b.val ? "active" : ""}`;
+                btn.textContent = b.label;
+                btn.addEventListener("click", () => {
+                  const oldBase = plateCtx.baseWeight;
+                  plateCtx.baseWeight = b.val;
+                  if (plateCtx.totalWeight < b.val) plateCtx.totalWeight = b.val;
+                  else if (oldBase > 0 && b.val > 0) plateCtx.totalWeight = Math.max(b.val, plateCtx.totalWeight - oldBase + b.val);
+                  renderPlateModalUI();
+                });
+                baseSelectorPills.appendChild(btn);
+              });
 
-          <div class="sets-table">
-            <div class="set-header">
-              <span>Set</span>
-              <span>${activeUnit.toUpperCase()}</span>
-              <span>Reps</span>
-              <span>Done</span>
-              <span></span>
-            </div>
-            <div class="set-rows-list" id="sets-list-${ex.id}"></div>
-          </div>
+              quickSteppersRow.innerHTML = "";
+              cfg.steppers.forEach(step => {
+                const btn = document.createElement("button");
+                btn.className = "step-btn";
+                btn.textContent = step > 0 ? `+${step}` : `${step}`;
+                btn.addEventListener("click", () => {
+                  plateCtx.totalWeight = Math.max(plateCtx.baseWeight, plateCtx.totalWeight + step);
+                  renderPlateModalUI();
+                });
+                quickSteppersRow.appendChild(btn);
+              });
 
-          <button class="add-set-btn" data-exid="${ex.id}">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            Add Set
-          </button>
-        `;
+              if (plateCtx.baseWeight > 0) {
+                barbellPlatesControls.style.display = "block";
+                dumbbellQuickGridWrap.style.display = "none";
+                barbellVisualArea.style.display = "flex";
 
-        const setsList = card.querySelector(`#sets-list-${ex.id}`);
-        renderSetRows(ex, setsList, usePlates);
+                const { plates, remainder } = calculatePlatesPerSide(plateCtx.totalWeight, plateCtx.baseWeight, cfg.plates);
+                if (plates.length === 0 && remainder === 0) {
+                  plateBreakdownText.textContent = `Empty Bar (${plateCtx.baseWeight} ${activeUnit})`;
+                } else {
+                  const counts = {};
+                  plates.forEach(p => { counts[p] = (counts[p] || 0) + 1; });
+                  const summaryParts = Object.keys(counts).sort((a, b) => b - a).map(p => `${counts[p]}×${p}`);
+                  let txt = `Bar (${plateCtx.baseWeight}) + [${summaryParts.join(", ")}] per side`;
+                  if (remainder > 0) txt += ` (+${remainder} rem)`;
+                  plateBreakdownText.textContent = txt;
+                }
 
-        card.querySelector(".add-set-btn").addEventListener("click", () => {
-          addNewSet(ex, usePlates);
-        });
+                const createPlateEls = (sideClass) => {
+                  const wrap = document.createElement("div");
+                  wrap.className = `plates-side ${sideClass}`;
+                  plates.forEach(p => {
+                    const el = document.createElement("div");
+                    el.className = "vis-plate";
+                    el.style.background = cfg.colors[p] || "#475569";
+                    el.style.height = `${cfg.heights[p] || 44}px`;
+                    el.style.width = p >= 25 ? "16px" : "12px";
+                    el.textContent = p === 2.5 ? "2.5" : p;
+                    el.addEventListener("click", () => {
+                      plateCtx.totalWeight = Math.max(plateCtx.baseWeight, plateCtx.totalWeight - p * 2);
+                      renderPlateModalUI();
+                    });
+                    wrap.appendChild(el);
+                  });
+                  return wrap;
+                };
 
-        mainContainer.appendChild(card);
-      });
-    }
+                barbellVisualArea.innerHTML = "";
+                barbellVisualArea.appendChild(createPlateEls("left"));
+                const sleeveL = document.createElement("div"); sleeveL.className = "bar-sleeve";
+                const shaft   = document.createElement("div"); shaft.className = "bar-shaft";
+                const sleeveR = document.createElement("div"); sleeveR.className = "bar-sleeve";
+                barbellVisualArea.appendChild(sleeveL);
+                barbellVisualArea.appendChild(shaft);
+                barbellVisualArea.appendChild(sleeveR);
+                barbellVisualArea.appendChild(createPlateEls("right"));
 
-    function renderSetRows(ex, container, usePlates) {
-      container.innerHTML = "";
-      const log = exerciseLogs[ex.id];
-      if (!log || !log.currentSets) return;
+                platesGrid.innerHTML = "";
+                cfg.plates.forEach(p => {
+                  const countOnSide = plates.filter(x => x === p).length;
+                  const btn = document.createElement("button");
+                  btn.className = "add-plate-btn";
+                  btn.innerHTML = `
+                    <span>+${p} ${activeUnit}</span>
+                    <span class="add-plate-sub">${countOnSide > 0 ? `${countOnSide} on each side` : `(+${p * 2} total)`}</span>
+                  `;
+                  btn.addEventListener("click", () => {
+                    plateCtx.totalWeight += p * 2;
+                    renderPlateModalUI();
+                  });
+                  platesGrid.appendChild(btn);
+                });
+              } else {
+                barbellPlatesControls.style.display = "none";
+                barbellVisualArea.style.display = "none";
+                dumbbellQuickGridWrap.style.display = "block";
+                plateBreakdownText.textContent = `Single Dumbbell / Total Weight (${plateCtx.totalWeight} ${activeUnit})`;
 
-      log.currentSets.forEach((set, index) => {
-        const row = document.createElement("div");
-        row.className = `set-row ${set.completed ? "completed" : ""}`;
-        row.id = `row-${ex.id}-${index}`;
+                dumbbellQuickGrid.innerHTML = "";
+                cfg.dbPresets.forEach(val => {
+                  const btn = document.createElement("button");
+                  btn.className = "step-btn";
+                  btn.style.padding = "11px 4px";
+                  if (plateCtx.totalWeight === val) {
+                    btn.style.background = "var(--accent-soft)";
+                    btn.style.borderColor = "var(--accent)";
+                    btn.style.color = "var(--accent)";
+                  }
+                  btn.textContent = val;
+                  btn.addEventListener("click", () => {
+                    plateCtx.totalWeight = val;
+                    renderPlateModalUI();
+                  });
+                  dumbbellQuickGrid.appendChild(btn);
+                });
+              }
+            }
 
-        const weightHtml = usePlates
-          ? `<div class="weight-box">
-               <input type="number" step="any" inputmode="decimal" class="set-input weight-input" placeholder="0" value="${set.weight !== undefined ? set.weight : ""}" />
-               <button type="button" class="plate-trigger-btn" title="Open Plate Counter">
-                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-                   <circle cx="12" cy="12" r="9"/>
-                   <circle cx="12" cy="12" r="3"/>
-                 </svg>
-               </button>
-             </div>`
-          : `<input type="number" step="any" inputmode="decimal" class="set-input weight-input" placeholder="0" value="${set.weight !== undefined ? set.weight : ""}" />`;
-
-        row.innerHTML = `
-          <div class="set-number">${index + 1}</div>
-          <div>${weightHtml}</div>
-          <div>
-            <input type="number" inputmode="numeric" class="set-input reps-input" placeholder="0" value="${set.reps !== undefined ? set.reps : ""}" />
-          </div>
-          <div>
-            <button type="button" class="btn-complete" title="Complete set">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </button>
-          </div>
-          <div>
-            <button type="button" class="btn-del-set" title="Remove set">&times;</button>
-          </div>
-        `;
-
-        const weightInput = row.querySelector(".weight-input");
-        weightInput.addEventListener("input", (e) => {
-          exerciseLogs[ex.id].currentSets[index].weight = e.target.value.trim();
-          saveLogs();
-          updateExercise1RMBadge(ex.id);
-          updateDayProgressBar();
-        });
-
-        const repsInput = row.querySelector(".reps-input");
-        repsInput.addEventListener("input", (e) => {
-          exerciseLogs[ex.id].currentSets[index].reps = e.target.value.trim();
-          saveLogs();
-          updateExercise1RMBadge(ex.id);
-          updateDayProgressBar();
-        });
-
-        if (usePlates) {
-          row.querySelector(".plate-trigger-btn").addEventListener("click", () => {
-            openPlateCounter(ex, index);
-          });
-        }
-
-        row.querySelector(".btn-complete").addEventListener("click", () => {
-          const isDone = !exerciseLogs[ex.id].currentSets[index].completed;
-          exerciseLogs[ex.id].currentSets[index].completed = isDone;
-          saveLogs();
-          row.classList.toggle("completed", isDone);
-          updateDayProgressBar();
-        });
-
-        row.querySelector(".btn-del-set").addEventListener("click", () => {
-          if (exerciseLogs[ex.id].currentSets.length <= 1) {
-            showToast("Each exercise needs at least 1 set.");
-            return;
-          }
-          exerciseLogs[ex.id].currentSets.splice(index, 1);
-          saveLogs();
-          renderSetRows(ex, container, usePlates);
-          updateExercise1RMBadge(ex.id);
-          updateDayProgressBar();
-        });
-
-        container.appendChild(row);
-      });
-    }
-
-    function addNewSet(ex, usePlates) {
-      const log = exerciseLogs[ex.id];
-      if (!log) return;
-      const prevSet = log.currentSets[log.currentSets.length - 1];
-      log.currentSets.push({
-        weight: prevSet ? prevSet.weight : "",
-        reps: "",
-        completed: false
-      });
-      saveLogs();
-      const container = document.getElementById(`sets-list-${ex.id}`);
-      if (container) {
-        renderSetRows(ex, container, usePlates);
-      }
-      updateDayProgressBar();
-    }
-
-    /* =========================================================
-       INTERACTIVE PLATE & WEIGHT COUNTER MODAL
-       ========================================================= */
-    let plateCtx = {
-      ex: null,
-      setIndex: 0,
-      baseWeight: 45, // 45, 25, or 0
-      totalWeight: 135
-    };
-
-    function getPlateConfig() {
-      if (activeUnit === "kg") {
-        return {
-          bases: [
-            { label: "Bar (20 kg)", val: 20 },
-            { label: "Light (10 kg)", val: 10 },
-            { label: "Dumbbell (0)", val: 0 }
-          ],
-          plates: [25, 20, 15, 10, 5, 2.5],
-          steppers: [-10, -5, -2.5, 2.5, 5, 10],
-          dbPresets: [7.5, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27.5, 30, 35, 40],
-          colors: { 25: "#dc2626", 20: "#2563eb", 15: "#ca8a04", 10: "#16a34a", 5: "#64748b", 2.5: "#475569" },
-          heights: { 25: 72, 20: 66, 15: 58, 10: 50, 5: 40, 2.5: 32 }
-        };
-      }
-      return {
-        bases: [
-          { label: "Barbell (45)", val: 45 },
-          { label: "Light (25)", val: 25 },
-          { label: "Dumbbell (0)", val: 0 }
-        ],
-        plates: [45, 35, 25, 10, 5, 2.5],
-        steppers: [-10, -5, -2.5, 2.5, 5, 10],
-        dbPresets: [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90],
-        colors: { 45: "#2563eb", 35: "#ca8a04", 25: "#16a34a", 10: "#64748b", 5: "#dc2626", 2.5: "#475569" },
-        heights: { 45: 72, 35: 64, 25: 56, 10: 46, 5: 38, 2.5: 30 }
-      };
-    }
-
-    function openPlateCounter(ex, setIndex) {
-      const log = exerciseLogs[ex.id];
-      const currentVal = parseFloat(log.currentSets[setIndex].weight) || 0;
-      const cfg = getPlateConfig();
-
-      plateCtx.ex = ex;
-      plateCtx.setIndex = setIndex;
-
-      // Smart default base weight
-      const isDumbbell = (ex.name || "").toLowerCase().includes("dumbbell");
-      if (isDumbbell && !(ex.name || "").toLowerCase().includes("or barbell")) {
-        plateCtx.baseWeight = 0;
-        plateCtx.totalWeight = currentVal > 0 ? currentVal : (activeUnit === "kg" ? 15 : 35);
-      } else {
-        // Default Olympic Bar
-        plateCtx.baseWeight = cfg.bases[0].val;
-        if (currentVal > 0 && currentVal < plateCtx.baseWeight) {
-          plateCtx.baseWeight = 0;
-          plateCtx.totalWeight = currentVal;
-        } else {
-          plateCtx.totalWeight = currentVal > 0 ? currentVal : plateCtx.baseWeight;
-        }
-      }
-
-      plateModalTitle.textContent = `Set ${setIndex + 1} Weight`;
-      plateModalSub.textContent = ex.name;
-      applyPlateSetBtn.textContent = `Apply to Set ${setIndex + 1}`;
-
-      renderPlateModalUI();
-      plateModal.classList.add("open");
-    }
-
-    function calculatePlatesPerSide(total, base, plateSizes) {
-      let perSide = (total - base) / 2;
-      if (perSide <= 0) return { plates: [], remainder: 0 };
-
-      const result = [];
-      for (const p of plateSizes) {
-        while (perSide >= p - 0.001) {
-          result.push(p);
-          perSide -= p;
-        }
-      }
-      return { plates: result, remainder: Math.round(perSide * 100) / 100 };
-    }
-
-    function renderPlateModalUI() {
-      const cfg = getPlateConfig();
-      plateTotalVal.textContent = Number.isInteger(plateCtx.totalWeight)
-        ? plateCtx.totalWeight
-        : plateCtx.totalWeight.toFixed(1);
-      plateTotalUnit.textContent = activeUnit;
-
-      // 1. Base Selector Pills
-      baseSelectorPills.innerHTML = "";
-      cfg.bases.forEach(b => {
-        const btn = document.createElement("button");
-        btn.className = `base-pill ${plateCtx.baseWeight === b.val ? "active" : ""}`;
-        btn.textContent = b.label;
-        btn.addEventListener("click", () => {
-          const oldBase = plateCtx.baseWeight;
-          plateCtx.baseWeight = b.val;
-          if (plateCtx.totalWeight < b.val) {
-            plateCtx.totalWeight = b.val;
-          } else if (oldBase > 0 && b.val > 0) {
-            // Keep plates, swap bar difference
-            plateCtx.totalWeight = Math.max(b.val, plateCtx.totalWeight - oldBase + b.val);
-          }
-          renderPlateModalUI();
-        });
-        baseSelectorPills.appendChild(btn);
-      });
-
-      // 2. Quick Steppers
-      quickSteppersRow.innerHTML = "";
-      cfg.steppers.forEach(step => {
-        const btn = document.createElement("button");
-        btn.className = "step-btn";
-        btn.textContent = step > 0 ? `+${step}` : `${step}`;
-        btn.addEventListener("click", () => {
-          plateCtx.totalWeight = Math.max(plateCtx.baseWeight, plateCtx.totalWeight + step);
-          renderPlateModalUI();
-        });
-        quickSteppersRow.appendChild(btn);
-      });
-
-      // 3. Barbell Mode vs Dumbbell Mode
-      if (plateCtx.baseWeight > 0) {
-        barbellPlatesControls.style.display = "block";
-        dumbbellQuickGridWrap.style.display = "none";
-        barbellVisualArea.style.display = "flex";
-
-        const { plates, remainder } = calculatePlatesPerSide(plateCtx.totalWeight, plateCtx.baseWeight, cfg.plates);
-
-        // Breakdown text
-        if (plates.length === 0 && remainder === 0) {
-          plateBreakdownText.textContent = `Empty Bar (${plateCtx.baseWeight} ${activeUnit})`;
-        } else {
-          const counts = {};
-          plates.forEach(p => { counts[p] = (counts[p] || 0) + 1; });
-          const summaryParts = Object.keys(counts)
-            .sort((a, b) => b - a)
-            .map(p => `${counts[p]}×${p}`);
-          let txt = `Bar (${plateCtx.baseWeight}) + [${summaryParts.join(", ")}] per side`;
-          if (remainder > 0) txt += ` (+${remainder} rem)`;
-          plateBreakdownText.textContent = txt;
-        }
-
-        // Visual Barbell
-        const createPlateEls = (sideClass) => {
-          const wrap = document.createElement("div");
-          wrap.className = `plates-side ${sideClass}`;
-          plates.forEach(p => {
-            const el = document.createElement("div");
-            el.className = "vis-plate";
-            el.style.background = cfg.colors[p] || "#475569";
-            el.style.height = `${cfg.heights[p] || 44}px`;
-            el.style.width = p >= 25 ? "16px" : "12px";
-            el.textContent = p === 2.5 ? "2.5" : p;
-            el.title = `Tap to remove ${p}`;
-            el.addEventListener("click", () => {
-              plateCtx.totalWeight = Math.max(plateCtx.baseWeight, plateCtx.totalWeight - p * 2);
+            clearPlatesBtn.addEventListener("click", () => {
+              plateCtx.totalWeight = plateCtx.baseWeight;
               renderPlateModalUI();
             });
-            wrap.appendChild(el);
-          });
-          return wrap;
-        };
 
-        barbellVisualArea.innerHTML = "";
-        barbellVisualArea.appendChild(createPlateEls("left"));
-        const sleeveL = document.createElement("div"); sleeveL.className = "bar-sleeve";
-        const shaft   = document.createElement("div"); shaft.className = "bar-shaft";
-        const sleeveR = document.createElement("div"); sleeveR.className = "bar-sleeve";
-        barbellVisualArea.appendChild(sleeveL);
-        barbellVisualArea.appendChild(shaft);
-        barbellVisualArea.appendChild(sleeveR);
-        barbellVisualArea.appendChild(createPlateEls("right"));
+            function commitPlateWeight(applyToAll) {
+              if (!plateCtx.ex) return;
+              const exId = plateCtx.ex.id;
+              const valStr = Number.isInteger(plateCtx.totalWeight)
+                ? String(plateCtx.totalWeight)
+                : String(Number(plateCtx.totalWeight.toFixed(1)));
 
-        // Add Plate Buttons (Per Side)
-        platesGrid.innerHTML = "";
-        cfg.plates.forEach(p => {
-          const countOnSide = plates.filter(x => x === p).length;
-          const btn = document.createElement("button");
-          btn.className = "add-plate-btn";
-          btn.innerHTML = `
-            <span>+${p} ${activeUnit}</span>
-            <span class="add-plate-sub">${countOnSide > 0 ? `${countOnSide} on each side` : `(+${p * 2} total)`}</span>
-          `;
-          btn.addEventListener("click", () => {
-            plateCtx.totalWeight += p * 2;
-            renderPlateModalUI();
-          });
-          platesGrid.appendChild(btn);
-        });
-      } else {
-        // Dumbbell / Zero Base Mode
-        barbellPlatesControls.style.display = "none";
-        barbellVisualArea.style.display = "none";
-        dumbbellQuickGridWrap.style.display = "block";
-        plateBreakdownText.textContent = `Single Dumbbell / Total Weight (${plateCtx.totalWeight} ${activeUnit})`;
+              const sets = exerciseLogs[exId].currentSets;
+              if (applyToAll) {
+                sets.forEach(s => { s.weight = valStr; });
+                showToast(`Set all sets to ${valStr} ${activeUnit}`);
+              } else {
+                if (sets[plateCtx.setIndex]) sets[plateCtx.setIndex].weight = valStr;
+                showToast(`Set ${plateCtx.setIndex + 1} updated to ${valStr} ${activeUnit}`);
+              }
 
-        dumbbellQuickGrid.innerHTML = "";
-        cfg.dbPresets.forEach(val => {
-          const btn = document.createElement("button");
-          btn.className = "step-btn";
-          btn.style.padding = "11px 4px";
-          if (plateCtx.totalWeight === val) {
-            btn.style.background = "var(--accent-soft)";
-            btn.style.borderColor = "var(--accent)";
-            btn.style.color = "var(--accent)";
-          }
-          btn.textContent = val;
-          btn.addEventListener("click", () => {
-            plateCtx.totalWeight = val;
-            renderPlateModalUI();
-          });
-          dumbbellQuickGrid.appendChild(btn);
-        });
-      }
-    }
+              saveLogs();
+              plateModal.classList.remove("open");
+              renderCurrentDay();
+              updateDayProgressBar();
+            }
 
-    clearPlatesBtn.addEventListener("click", () => {
-      plateCtx.totalWeight = plateCtx.baseWeight;
-      renderPlateModalUI();
-    });
+            applyPlateSetBtn.addEventListener("click", () => commitPlateWeight(false));
+            applyPlateAllBtn.addEventListener("click", () => commitPlateWeight(true));
+            closePlateModalBtn.addEventListener("click", () => plateModal.classList.remove("open"));
 
-    function commitPlateWeight(applyToAll) {
-      if (!plateCtx.ex) return;
-      const exId = plateCtx.ex.id;
-      const valStr = Number.isInteger(plateCtx.totalWeight)
-        ? String(plateCtx.totalWeight)
-        : String(Number(plateCtx.totalWeight.toFixed(1)));
+            /* =========================================================
+               TRACKED HISTORY VIEW
+               ========================================================= */
+            function renderTrackedHistory() {
+              mainContainer.innerHTML = "";
 
-      const sets = exerciseLogs[exId].currentSets;
-      if (applyToAll) {
-        sets.forEach(s => { s.weight = valStr; });
-        showToast(`Set all sets to ${valStr} ${activeUnit}`);
-      } else {
-        if (sets[plateCtx.setIndex]) {
-          sets[plateCtx.setIndex].weight = valStr;
-        }
-        showToast(`Set ${plateCtx.setIndex + 1} updated to ${valStr} ${activeUnit}`);
-      }
+              const historyTop = document.createElement("div");
+              historyTop.style.display = "flex";
+              historyTop.style.justifyContent = "space-between";
+              historyTop.style.alignItems = "center";
+              historyTop.style.marginBottom = "14px";
+              historyTop.innerHTML = `
+                <div>
+                  <h2 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">Tracked Workouts</h2>
+                  <span style="font-size: 0.78rem; color: var(--text-muted);">Permanent log across all routines & changes</span>
+                </div>
+                ${sessionHistory.length > 0 ? `
+                  <button class="btn btn-danger-outline" id="clearAllHistoryBtn" style="padding: 6px 12px; font-size: 0.75rem;">Clear All</button>
+                ` : ""}
+              `;
+              mainContainer.appendChild(historyTop);
 
-      saveLogs();
-      plateModal.classList.remove("open");
-      renderCurrentDay();
-      updateDayProgressBar();
-    }
+              const clearBtn = historyTop.querySelector("#clearAllHistoryBtn");
+              if (clearBtn) {
+                clearBtn.addEventListener("click", () => {
+                  if (confirm("Permanently delete all tracked workout history?")) {
+                    sessionHistory = [];
+                    saveHistory();
+                    renderTrackedHistory();
+                    showToast("Tracked history cleared.");
+                  }
+                });
+              }
 
-    applyPlateSetBtn.addEventListener("click", () => commitPlateWeight(false));
-    applyPlateAllBtn.addEventListener("click", () => commitPlateWeight(true));
-    closePlateModalBtn.addEventListener("click", () => plateModal.classList.remove("open"));
+              if (!sessionHistory || sessionHistory.length === 0) {
+                const empty = document.createElement("div");
+                empty.className = "empty-state";
+                empty.innerHTML = `
+                  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="margin: 0 auto 12px; color: var(--text-muted);">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                  </svg>
+                  <p style="font-weight: 700; color: var(--text-main); margin-bottom: 4px;">No Tracked Workouts Yet</p>
+                  <p style="font-size: 0.82rem;">Check off completed sets on any day and tap "Start Fresh Session" to save a permanent log here.</p>
+                `;
+                mainContainer.appendChild(empty);
+                return;
+              }
 
-    /* =========================================================
-       TRACKED HISTORY VIEW
-       ========================================================= */
-    function renderTrackedHistory() {
-      mainContainer.innerHTML = "";
+              sessionHistory.forEach((session, sIdx) => {
+                const card = document.createElement("div");
+                card.className = "history-card";
+                const unitDisplay = (session.unit || activeUnit).toUpperCase();
 
-      const historyTop = document.createElement("div");
-      historyTop.style.display = "flex";
-      historyTop.style.justifyContent = "space-between";
-      historyTop.style.alignItems = "center";
-      historyTop.style.marginBottom = "14px";
-      historyTop.innerHTML = `
-        <div>
-          <h2 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">Tracked Workouts</h2>
-          <span style="font-size: 0.78rem; color: var(--text-muted);">Permanent log across all routines & changes</span>
-        </div>
-        ${sessionHistory.length > 0 ? `
-          <button class="btn btn-danger-outline" id="clearAllHistoryBtn" style="padding: 6px 12px; font-size: 0.75rem;">
-            Clear All
-          </button>
-        ` : ""}
-      `;
-      mainContainer.appendChild(historyTop);
+                let sessionVol = 0;
+                let sessionTotalSets = 0;
+                let exercisesHtml = "";
 
-      const clearBtn = historyTop.querySelector("#clearAllHistoryBtn");
-      if (clearBtn) {
-        clearBtn.addEventListener("click", () => {
-          if (confirm("Permanently delete all tracked workout history?")) {
-            sessionHistory = [];
-            saveHistory();
-            renderTrackedHistory();
-            showToast("Tracked history cleared.");
-          }
-        });
-      }
+                session.exercises.forEach(ex => {
+                  let setsHtml = "";
+                  let bestOrm = 0;
+                  ex.sets.forEach((set, setIdx) => {
+                    sessionTotalSets++;
+                    sessionVol += (parseFloat(set.weight) || 0) * (parseFloat(set.reps) || 0);
+                    const orm = calc1RM(set.weight, set.reps);
+                    if (orm > bestOrm) bestOrm = orm;
+                    setsHtml += `<div class="history-set-chip">#${setIdx + 1}: <b>${set.weight} ${unitDisplay}</b> × ${set.reps}</div>`;
+                  });
 
-      if (!sessionHistory || sessionHistory.length === 0) {
-        const empty = document.createElement("div");
-        empty.className = "empty-state";
-        empty.innerHTML = `
-          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="margin: 0 auto 12px; color: var(--text-muted);">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-          </svg>
-          <p style="font-weight: 700; color: var(--text-main); margin-bottom: 4px;">No Tracked Workouts Yet</p>
-          <p style="font-size: 0.82rem;">Check off completed sets on any day and tap "Start Fresh Session" to save a permanent log here.</p>
-        `;
-        mainContainer.appendChild(empty);
-        return;
-      }
+                  exercisesHtml += `
+                    <div class="history-exercise-item">
+                      <div class="history-ex-top">
+                        <div class="history-ex-name">${escapeHtml(ex.name)}</div>
+                        ${bestOrm > 0 ? `<span class="history-ex-1rm">1RM: ${bestOrm} ${unitDisplay}</span>` : ""}
+                      </div>
+                      <div class="history-sets-flow">${setsHtml}</div>
+                    </div>
+                  `;
+                });
 
-      sessionHistory.forEach((session, sIdx) => {
-        const card = document.createElement("div");
-        card.className = "history-card";
-        const unitDisplay = (session.unit || activeUnit).toUpperCase();
+                card.innerHTML = `
+                  <div class="history-card-header">
+                    <div>
+                      <div class="history-date">${session.dateStr} <span style="font-size: 0.76rem; font-weight: 500; color: var(--text-muted);">• ${session.timeStr || ""}</span></div>
+                      <div class="history-submeta">${escapeHtml(session.dayTitle || session.dayName || "")}</div>
+                      <div class="history-submeta" style="margin-top: 3px; font-weight: 600; color: var(--accent);">
+                        ${sessionTotalSets} sets • ${Math.round(sessionVol).toLocaleString()} ${unitDisplay} volume
+                      </div>
+                    </div>
+                    <div style="display: flex; gap: 6px; align-items: center;">
+                      <span class="history-day-tag">${escapeHtml(session.dayName || "Log")}</span>
+                      <button class="btn-del-set del-history-btn" title="Delete entry" style="font-size: 1.15rem; height: 28px; width: 28px;">&times;</button>
+                    </div>
+                  </div>
+                  <div>${exercisesHtml}</div>
+                `;
 
-        let sessionVol = 0;
-        let sessionTotalSets = 0;
-        let exercisesHtml = "";
+                card.querySelector(".del-history-btn").addEventListener("click", () => {
+                  if (confirm(`Delete workout log from ${session.dateStr}?`)) {
+                    sessionHistory.splice(sIdx, 1);
+                    saveHistory();
+                    renderTrackedHistory();
+                    showToast("Workout entry deleted.");
+                  }
+                });
 
-        session.exercises.forEach(ex => {
-          let setsHtml = "";
-          let bestOrm = 0;
-          ex.sets.forEach((set, setIdx) => {
-            sessionTotalSets++;
-            const w = parseFloat(set.weight) || 0;
-            const r = parseFloat(set.reps) || 0;
-            sessionVol += w * r;
-            const orm = calc1RM(set.weight, set.reps);
-            if (orm > bestOrm) bestOrm = orm;
+                mainContainer.appendChild(card);
+              });
+            }
 
-            setsHtml += `
-              <div class="history-set-chip">
-                #${setIdx + 1}: <b>${set.weight} ${unitDisplay}</b> × ${set.reps}
-              </div>
-            `;
-          });
+            /* =========================================================
+               START FRESH SESSION
+               ========================================================= */
+            startFreshBtn.addEventListener("click", () => {
+              const currentDay = routine.find(d => d.id === activeDayId);
+              if (!currentDay) return;
 
-          exercisesHtml += `
-            <div class="history-exercise-item">
-              <div class="history-ex-top">
-                <div class="history-ex-name">${escapeHtml(ex.name)}</div>
-                ${bestOrm > 0 ? `<span class="history-ex-1rm">1RM: ${bestOrm} ${unitDisplay}</span>` : ""}
-              </div>
-              <div class="history-sets-flow">${setsHtml}</div>
-            </div>
-          `;
-        });
+              let completedSetsCount = 0;
+              currentDay.exercises.forEach(ex => {
+                const log = exerciseLogs[ex.id];
+                if (log && log.currentSets) completedSetsCount += log.currentSets.filter(s => s.completed).length;
+              });
 
-        card.innerHTML = `
-          <div class="history-card-header">
-            <div>
-              <div class="history-date">${session.dateStr} <span style="font-size: 0.76rem; font-weight: 500; color: var(--text-muted);">• ${session.timeStr || ""}</span></div>
-              <div class="history-submeta">${escapeHtml(session.dayTitle || session.dayName || "")}</div>
-              <div class="history-submeta" style="margin-top: 3px; font-weight: 600; color: var(--accent);">
-                ${sessionTotalSets} sets • ${Math.round(sessionVol).toLocaleString()} ${unitDisplay} volume
-              </div>
-            </div>
-            <div style="display: flex; gap: 6px; align-items: center;">
-              <span class="history-day-tag">${escapeHtml(session.dayName || "Log")}</span>
-              <button class="btn-del-set del-history-btn" title="Delete entry" style="font-size: 1.15rem; height: 28px; width: 28px;">&times;</button>
-            </div>
-          </div>
-          <div>${exercisesHtml}</div>
-        `;
+              if (completedSetsCount === 0) {
+                showToast("Check off completed sets first before saving session.");
+                return;
+              }
 
-        card.querySelector(".del-history-btn").addEventListener("click", () => {
-          if (confirm(`Delete workout log from ${session.dateStr}?`)) {
-            sessionHistory.splice(sIdx, 1);
-            saveHistory();
-            renderTrackedHistory();
-            showToast("Workout entry deleted.");
-          }
-        });
+              if (!confirm(`Archive ${completedSetsCount} completed sets to your Tracked History and start fresh?`)) return;
 
-        mainContainer.appendChild(card);
-      });
-    }
+              const sessionSnapshotExercises = [];
+              currentDay.exercises.forEach(ex => {
+                const log = exerciseLogs[ex.id];
+                if (log && log.currentSets) {
+                  const finishedSets = log.currentSets.filter(s => s.completed);
+                  if (finishedSets.length > 0) {
+                    log.lastSession = finishedSets.map(s => ({ weight: s.weight || "0", reps: s.reps || "0" }));
+                    sessionSnapshotExercises.push({
+                      name: ex.name,
+                      sets: finishedSets.map(s => ({ weight: s.weight || "0", reps: s.reps || "0" }))
+                    });
+                  }
+                  log.currentSets.forEach(s => { s.completed = false; });
+                }
+              });
 
-    /* =========================================================
-       START FRESH SESSION (ARCHIVE TO TRACKED)
-       ========================================================= */
-    startFreshBtn.addEventListener("click", () => {
-      const currentDay = routine.find(d => d.id === activeDayId);
-      if (!currentDay) return;
+              if (sessionSnapshotExercises.length > 0) {
+                const now = new Date();
+                sessionHistory.unshift({
+                  id: "sess_" + Date.now(),
+                  dateStr: now.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }),
+                  timeStr: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                  dayName: currentDay.dayName,
+                  dayTitle: currentDay.title,
+                  unit: activeUnit,
+                  exercises: sessionSnapshotExercises
+                });
+                saveHistory();
+              }
 
-      let completedSetsCount = 0;
-      currentDay.exercises.forEach(ex => {
-        const log = exerciseLogs[ex.id];
-        if (log && log.currentSets) {
-          completedSetsCount += log.currentSets.filter(s => s.completed).length;
-        }
-      });
-
-      if (completedSetsCount === 0) {
-        showToast("Check off completed sets first before saving session.");
-        return;
-      }
-
-      if (!confirm(`Archive ${completedSetsCount} completed sets to your Tracked History and start fresh?`)) {
-        return;
-      }
-
-      const sessionSnapshotExercises = [];
-
-      currentDay.exercises.forEach(ex => {
-        const log = exerciseLogs[ex.id];
-        if (log && log.currentSets) {
-          const finishedSets = log.currentSets.filter(s => s.completed);
-          if (finishedSets.length > 0) {
-            log.lastSession = finishedSets.map(s => ({
-              weight: s.weight || "0",
-              reps: s.reps || "0"
-            }));
-
-            sessionSnapshotExercises.push({
-              name: ex.name,
-              sets: finishedSets.map(s => ({
-                weight: s.weight || "0",
-                reps: s.reps || "0"
-              }))
+              saveLogs();
+              renderCurrentDay();
+              updateDayProgressBar();
+              showToast("Saved to Tracked tab! Fresh session ready.");
             });
-          }
-          log.currentSets.forEach(s => { s.completed = false; });
-        }
-      });
 
-      if (sessionSnapshotExercises.length > 0) {
-        const now = new Date();
-        sessionHistory.unshift({
-          id: "sess_" + Date.now(),
-          dateStr: now.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }),
-          timeStr: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          dayName: currentDay.dayName,
-          dayTitle: currentDay.title,
-          unit: activeUnit,
-          exercises: sessionSnapshotExercises
-        });
-        saveHistory();
-      }
+            /* =========================================================
+               UNIT TOGGLE
+               ========================================================= */
+            unitToggleBtn.addEventListener("click", () => {
+              activeUnit = activeUnit === "lbs" ? "kg" : "lbs";
+              saveUnit();
+              unitLabel.textContent = activeUnit.toUpperCase();
+              if (activeDayId === "tracked") renderTrackedHistory();
+              else {
+                renderCurrentDay();
+                updateDayProgressBar();
+              }
+              showToast(`Units switched to ${activeUnit.toUpperCase()}`);
+            });
 
-      saveLogs();
-      renderCurrentDay();
-      updateDayProgressBar();
-      showToast("Saved to Tracked tab! Fresh session ready.");
-    });
+            /* =========================================================
+               ROUTINE & DAY EDITOR (WITH IN-MODAL DAY SWITCHER)
+               ========================================================= */
+            function switchEditModalTab(mode) {
+              editModalMode = mode;
+              tabExercisesBtn.classList.toggle("active", mode === "exercises");
+              tabDaysBtn.classList.toggle("active", mode === "days");
+              editExercisesSection.style.display = mode === "exercises" ? "block" : "none";
+              editDaysSection.style.display = mode === "days" ? "block" : "none";
 
-    /* =========================================================
-       UNIT TOGGLE
-       ========================================================= */
-    unitToggleBtn.addEventListener("click", () => {
-      activeUnit = activeUnit === "lbs" ? "kg" : "lbs";
-      saveUnit();
-      unitLabel.textContent = activeUnit.toUpperCase();
-      if (activeDayId === "tracked") {
-        renderTrackedHistory();
-      } else {
-        renderCurrentDay();
-        updateDayProgressBar();
-      }
-      showToast(`Units switched to ${activeUnit.toUpperCase()}`);
-    });
+              if (mode === "exercises") renderEditRoutineList();
+              else renderEditDaysList();
+            }
 
-    /* =========================================================
-       ROUTINE EDITOR
-       ========================================================= */
-    openEditRoutineBtn.addEventListener("click", () => {
-      const currentDay = routine.find(d => d.id === activeDayId) || routine[0];
-      editRoutineModalTitle.textContent = `Edit Routine (${currentDay.dayName})`;
-      renderEditRoutineList();
-      editRoutineModal.classList.add("open");
-    });
+            tabExercisesBtn.addEventListener("click", () => switchEditModalTab("exercises"));
+            tabDaysBtn.addEventListener("click", () => switchEditModalTab("days"));
 
-    closeEditRoutineBtn.addEventListener("click", () => editRoutineModal.classList.remove("open"));
+            openEditRoutineBtn.addEventListener("click", () => {
+              if (activeDayId === "tracked") {
+                if (!routine.some(d => d.id === editingDayId)) {
+                  editingDayId = routine[0]?.id || "";
+                }
+                switchEditModalTab("days");
+              } else {
+                editingDayId = activeDayId;
+                switchEditModalTab("exercises");
+              }
+              editRoutineModalTitle.textContent = "Edit Routine & Days";
+              editRoutineModal.classList.add("open");
+            });
 
-    function renderEditRoutineList() {
-      const currentDay = routine.find(d => d.id === activeDayId);
-      editExerciseList.innerHTML = "";
+            closeEditRoutineBtn.addEventListener("click", () => editRoutineModal.classList.remove("open"));
 
-      if (!currentDay || !currentDay.exercises || currentDay.exercises.length === 0) {
-        editExerciseList.innerHTML = `<div class="empty-state">No exercises scheduled.</div>`;
-        return;
-      }
+            function renderEditRoutineList() {
+              let currentDay = routine.find(d => d.id === editingDayId);
+              if (!currentDay && routine.length > 0) {
+                currentDay = routine[0];
+                editingDayId = currentDay.id;
+              }
 
-      currentDay.exercises.forEach((ex, idx) => {
-        const item = document.createElement("div");
-        item.className = "edit-routine-item";
+              // Render In-Modal Day Picker Strip
+              editModalDayPicker.innerHTML = "";
+              routine.forEach(d => {
+                const chip = document.createElement("button");
+                chip.className = `modal-day-chip ${d.id === editingDayId ? "active" : ""}`;
+                chip.textContent = d.dayName;
+                chip.addEventListener("click", () => {
+                  editingDayId = d.id;
+                  renderEditRoutineList();
+                });
+                editModalDayPicker.appendChild(chip);
+              });
 
-        item.innerHTML = `
-          <div class="edit-item-info">
-            <div class="edit-item-name">${escapeHtml(ex.name)}</div>
-            <div class="edit-item-meta">${ex.targetSets} sets × ${escapeHtml(ex.targetReps)}${shouldShowPlateCounter(ex) ? " • Plate Counter" : ""}</div>
-          </div>
-          <div class="edit-item-actions">
-            <button class="btn-edit-action move-up-btn" title="Move Up" ${idx === 0 ? "disabled style='opacity:0.3; pointer-events:none;'" : ""}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-            </button>
-            <button class="btn-edit-action move-down-btn" title="Move Down" ${idx === currentDay.exercises.length - 1 ? "disabled style='opacity:0.3; pointer-events:none;'" : ""}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </button>
-            <button class="btn-edit-action edit-btn" title="Edit">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            </button>
-            <button class="btn-edit-action del-btn" title="Delete" style="color: var(--danger);">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-            </button>
-          </div>
-        `;
+              const activeChip = editModalDayPicker.querySelector(".modal-day-chip.active");
+              if (activeChip && activeChip.scrollIntoView) {
+                activeChip.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+              }
 
-        item.querySelector(".move-up-btn").addEventListener("click", () => {
-          if (idx > 0) {
-            [currentDay.exercises[idx], currentDay.exercises[idx - 1]] = [currentDay.exercises[idx - 1], currentDay.exercises[idx]];
-            saveRoutine();
-            renderEditRoutineList();
-            renderCurrentDay();
-          }
-        });
+              editingDayHint.textContent = currentDay ? `${currentDay.dayName} Exercises` : "Exercises";
+              editExerciseList.innerHTML = "";
 
-        item.querySelector(".move-down-btn").addEventListener("click", () => {
-          if (idx < currentDay.exercises.length - 1) {
-            [currentDay.exercises[idx], currentDay.exercises[idx + 1]] = [currentDay.exercises[idx + 1], currentDay.exercises[idx]];
-            saveRoutine();
-            renderEditRoutineList();
-            renderCurrentDay();
-          }
-        });
+              if (!currentDay || !currentDay.exercises || currentDay.exercises.length === 0) {
+                editExerciseList.innerHTML = `<div class="empty-state">No exercises scheduled for ${currentDay ? escapeHtml(currentDay.dayName) : "this day"}.</div>`;
+                return;
+              }
 
-        item.querySelector(".edit-btn").addEventListener("click", () => openExerciseModalForEdit(ex));
+              currentDay.exercises.forEach((ex, idx) => {
+                const item = document.createElement("div");
+                item.className = "edit-routine-item";
+                item.innerHTML = `
+                  <div class="edit-item-info">
+                    <div class="edit-item-name">${escapeHtml(ex.name)}</div>
+                    <div class="edit-item-meta">${ex.targetSets} sets × ${escapeHtml(ex.targetReps)}${shouldShowPlateCounter(ex) ? " • Plate Counter" : ""}</div>
+                  </div>
+                  <div class="edit-item-actions">
+                    <button class="btn-edit-action move-up-btn" title="Move Up" ${idx === 0 ? "disabled style='opacity:0.3; pointer-events:none;'" : ""}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </button>
+                    <button class="btn-edit-action move-down-btn" title="Move Down" ${idx === currentDay.exercises.length - 1 ? "disabled style='opacity:0.3; pointer-events:none;'" : ""}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <button class="btn-edit-action edit-btn" title="Edit">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </button>
+                    <button class="btn-edit-action del-btn" title="Delete" style="color: var(--danger);">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                  </div>
+                `;
 
-        item.querySelector(".del-btn").addEventListener("click", () => {
-          if (confirm(`Remove "${ex.name}" from ${currentDay.dayName}?`)) {
-            currentDay.exercises.splice(idx, 1);
-            saveRoutine();
-            renderEditRoutineList();
-            renderCurrentDay();
-            updateDayProgressBar();
-            showToast("Exercise removed.");
-          }
-        });
+                item.querySelector(".move-up-btn").addEventListener("click", () => {
+                  if (idx > 0) {
+                    [currentDay.exercises[idx], currentDay.exercises[idx - 1]] = [currentDay.exercises[idx - 1], currentDay.exercises[idx]];
+                    saveRoutine();
+                    renderEditRoutineList();
+                    renderApp();
+                  }
+                });
 
-        editExerciseList.appendChild(item);
-      });
-    }
+                item.querySelector(".move-down-btn").addEventListener("click", () => {
+                  if (idx < currentDay.exercises.length - 1) {
+                    [currentDay.exercises[idx], currentDay.exercises[idx + 1]] = [currentDay.exercises[idx + 1], currentDay.exercises[idx]];
+                    saveRoutine();
+                    renderEditRoutineList();
+                    renderApp();
+                  }
+                });
 
-    function openExerciseModalForAdd() {
-      editExId.value = "";
-      exerciseFormTitle.textContent = "Add New Exercise";
-      exNameInput.value = "";
-      exSetsInput.value = "3";
-      exRepsInput.value = "8–10 reps";
-      exCueInput.value = "";
-      exPlateToggleInput.checked = false;
-      exerciseFormModal.classList.add("open");
-      exNameInput.focus();
-    }
+                item.querySelector(".edit-btn").addEventListener("click", () => openExerciseModalForEdit(ex));
 
-    function openExerciseModalForEdit(ex) {
-      editExId.value = ex.id;
-      exerciseFormTitle.textContent = "Edit Exercise";
-      exNameInput.value = ex.name || "";
-      exSetsInput.value = ex.targetSets || 3;
-      exRepsInput.value = ex.targetReps || "";
-      exCueInput.value = ex.cue || "";
-      exPlateToggleInput.checked = shouldShowPlateCounter(ex);
-      exerciseFormModal.classList.add("open");
-    }
+                item.querySelector(".del-btn").addEventListener("click", () => {
+                  if (confirm(`Remove "${ex.name}" from ${currentDay.dayName}?`)) {
+                    currentDay.exercises.splice(idx, 1);
+                    saveRoutine();
+                    renderEditRoutineList();
+                    renderApp();
+                    showToast("Exercise removed.");
+                  }
+                });
 
-    openAddExerciseBtn.addEventListener("click", openExerciseModalForAdd);
-    closeExerciseFormBtn.addEventListener("click", () => exerciseFormModal.classList.remove("open"));
-    cancelExerciseFormBtn.addEventListener("click", () => exerciseFormModal.classList.remove("open"));
+                editExerciseList.appendChild(item);
+              });
+            }
 
-    saveExerciseFormBtn.addEventListener("click", () => {
-      const name = exNameInput.value.trim();
-      if (!name) return showToast("Enter an exercise name.");
+            function renderEditDaysList() {
+              editDaysList.innerHTML = "";
+              if (!routine || routine.length === 0) {
+                editDaysList.innerHTML = `<div class="empty-state">No workout days yet.</div>`;
+                return;
+              }
 
-      const sets = parseInt(exSetsInput.value, 10) || 3;
-      const reps = exRepsInput.value.trim() || "8–12 reps";
-      const cue  = exCueInput.value.trim();
-      const usePlate = exPlateToggleInput.checked;
+              routine.forEach((day, idx) => {
+                const item = document.createElement("div");
+                item.className = "edit-routine-item";
+                const exCount = Array.isArray(day.exercises) ? day.exercises.length : 0;
 
-      const currentDay = routine.find(d => d.id === activeDayId);
-      if (!currentDay) return;
+                item.innerHTML = `
+                  <div class="edit-item-info">
+                    <div class="edit-item-name">${escapeHtml(day.dayName)}</div>
+                    <div class="edit-item-meta">${escapeHtml(day.focus || day.title || "")} • ${exCount} exercise${exCount === 1 ? "" : "s"}</div>
+                  </div>
+                  <div class="edit-item-actions">
+                    <button class="btn-edit-action move-up-btn" title="Move Left / Up" ${idx === 0 ? "disabled style='opacity:0.3; pointer-events:none;'" : ""}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </button>
+                    <button class="btn-edit-action move-down-btn" title="Move Right / Down" ${idx === routine.length - 1 ? "disabled style='opacity:0.3; pointer-events:none;'" : ""}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <button class="btn-edit-action edit-btn" title="Rename / Edit Day">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </button>
+                    <button class="btn-edit-action del-btn" title="Delete Day" style="color: var(--danger);">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                  </div>
+                `;
 
-      const targetId = editExId.value;
-      if (targetId) {
-        const ex = currentDay.exercises.find(e => e.id === targetId);
-        if (ex) {
-          ex.name = name;
-          ex.targetSets = sets;
-          ex.targetReps = reps;
-          ex.cue = cue;
-          ex.enablePlateCounter = usePlate;
-        }
-      } else {
-        const newEx = {
-          id: "ex-" + Date.now(),
-          name,
-          targetSets: sets,
-          targetReps: reps,
-          cue,
-          enablePlateCounter: usePlate
-        };
-        currentDay.exercises.push(newEx);
-        ensureExerciseLog(newEx);
-      }
+                item.querySelector(".move-up-btn").addEventListener("click", () => {
+                  if (idx > 0) {
+                    [routine[idx], routine[idx - 1]] = [routine[idx - 1], routine[idx]];
+                    saveRoutine();
+                    renderEditDaysList();
+                    renderApp();
+                  }
+                });
 
-      saveRoutine();
-      saveLogs();
-      exerciseFormModal.classList.remove("open");
-      renderEditRoutineList();
-      renderCurrentDay();
-      updateDayProgressBar();
-      showToast("Exercise saved.");
-    });
+                item.querySelector(".move-down-btn").addEventListener("click", () => {
+                  if (idx < routine.length - 1) {
+                    [routine[idx], routine[idx + 1]] = [routine[idx + 1], routine[idx]];
+                    saveRoutine();
+                    renderEditDaysList();
+                    renderApp();
+                  }
+                });
 
-    /* =========================================================
-       IMPORT / EXPORT DATA
-       ========================================================= */
-    openBackupBtn.addEventListener("click", () => backupModal.classList.add("open"));
-    closeBackupBtn.addEventListener("click", () => backupModal.classList.remove("open"));
+                item.querySelector(".edit-btn").addEventListener("click", () => openDayModalForEdit(day));
 
-    function getExportPayload() {
-      return {
-        app: "IronLog",
-        version: 3,
-        exportedAt: new Date().toISOString(),
-        activeUnit,
-        themePreference: currentThemeMode,
-        routine,
-        logs: exerciseLogs,
-        history: sessionHistory
-      };
-    }
+                item.querySelector(".del-btn").addEventListener("click", () => {
+                  if (routine.length <= 1) {
+                    showToast("You must keep at least 1 workout day.");
+                    return;
+                  }
+                  if (confirm(`Delete "${day.dayName}" and its scheduled exercises? (Past workouts in Tracked history stay safe)`)) {
+                    routine.splice(idx, 1);
+                    if (activeDayId === day.id) {
+                      activeDayId = routine[0].id;
+                      saveActiveDay();
+                    }
+                    if (editingDayId === day.id) {
+                      editingDayId = routine[0].id;
+                    }
+                    saveRoutine();
+                    renderEditDaysList();
+                    renderApp();
+                    showToast("Workout day deleted.");
+                  }
+                });
 
-    exportFileBtn.addEventListener("click", () => {
-      const blob = new Blob([JSON.stringify(getExportPayload(), null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `ironlog-backup-${new Date().toISOString().slice(0, 10)}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      showToast("Backup .JSON file downloaded.");
-    });
+                editDaysList.appendChild(item);
+              });
+            }
 
-    copyJsonBtn.addEventListener("click", () => {
-      const jsonStr = JSON.stringify(getExportPayload(), null, 2);
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(jsonStr).then(() => showToast("Backup text copied!"))
-          .catch(() => fallbackCopy(jsonStr));
-      } else {
-        fallbackCopy(jsonStr);
-      }
-    });
+            /* =========================================================
+               ADD / EDIT WORKOUT DAY MODAL
+               ========================================================= */
+            function openDayModalForAdd() {
+              editDayId.value = "";
+              dayFormTitle.textContent = "Add New Workout Day";
+              dayTabNameInput.value = "";
+              dayTitleInput.value = "";
+              dayFocusInput.value = "";
+              dayFormModal.classList.add("open");
+              dayTabNameInput.focus();
+            }
 
-    function fallbackCopy(text) {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-      showToast("Backup text copied!");
-    }
+            function openDayModalForEdit(day) {
+              editDayId.value = day.id;
+              dayFormTitle.textContent = `Edit ${day.dayName}`;
+              dayTabNameInput.value = day.dayName || "";
+              dayTitleInput.value = day.title || "";
+              dayFocusInput.value = day.focus || "";
+              dayFormModal.classList.add("open");
+            }
 
-    importFileInput.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        try {
-          processImportData(JSON.parse(ev.target.result));
-        } catch (err) {
-          alert("Could not read file. Make sure it is a valid IronLog JSON backup.");
-        }
-        importFileInput.value = "";
-      };
-      reader.readAsText(file);
-    });
+            openAddDayBtn.addEventListener("click", openDayModalForAdd);
+            closeDayFormBtn.addEventListener("click", () => dayFormModal.classList.remove("open"));
+            cancelDayFormBtn.addEventListener("click", () => dayFormModal.classList.remove("open"));
 
-    importPastedBtn.addEventListener("click", () => {
-      const raw = pasteJsonInput.value.trim();
-      if (!raw) return showToast("Paste backup text first.");
-      try {
-        processImportData(JSON.parse(raw));
-        pasteJsonInput.value = "";
-      } catch (err) {
-        alert("Invalid JSON backup text. Check that you copied the entire text.");
-      }
-    });
+            saveDayFormBtn.addEventListener("click", () => {
+              const tabName = dayTabNameInput.value.trim();
+              if (!tabName) return showToast("Please enter a short tab name (e.g. Push or Tuesday).");
 
-    function processImportData(data) {
-      if (!data || !Array.isArray(data.routine)) {
-        alert("Invalid backup format: routine data missing.");
-        return;
-      }
+              const title = dayTitleInput.value.trim() || tabName;
+              const focus = dayFocusInput.value.trim() || "Custom Workout";
+              const targetId = editDayId.value;
 
-      const histCount = Array.isArray(data.history) ? data.history.length : 0;
-      if (!confirm(`Import backup (${data.routine.length} days, ${histCount} tracked workouts)? This will replace current data.`)) {
-        return;
-      }
+              if (targetId) {
+                const day = routine.find(d => d.id === targetId);
+                if (day) {
+                  day.dayName = tabName;
+                  day.title = title;
+                  day.focus = focus;
+                }
+              } else {
+                const newDay = {
+                  id: "day-" + Date.now(),
+                  dayName: tabName,
+                  title,
+                  focus,
+                  exercises: []
+                };
+                routine.push(newDay);
+                activeDayId = newDay.id;
+                editingDayId = newDay.id;
+                saveActiveDay();
+              }
 
-      routine = data.routine;
-      exerciseLogs = data.logs || {};
-      sessionHistory = Array.isArray(data.history) ? data.history : [];
+              saveRoutine();
+              dayFormModal.classList.remove("open");
+              renderEditDaysList();
+              renderApp();
+              showToast("Workout day saved.");
+            });
 
-      if (data.activeUnit === "lbs" || data.activeUnit === "kg") {
-        activeUnit = data.activeUnit;
-      }
-      if (data.themePreference) {
-        currentThemeMode = data.themePreference;
-        saveThemePref();
-        applyTheme(currentThemeMode);
-      }
+            /* =========================================================
+               ADD / EDIT EXERCISE SUB-FORM (USES editingDayId)
+               ========================================================= */
+            function openExerciseModalForAdd() {
+              editExId.value = "";
+              exerciseFormTitle.textContent = "Add New Exercise";
+              exNameInput.value = "";
+              exSetsInput.value = "3";
+              exRepsInput.value = "8–10 reps";
+              exCueInput.value = "";
+              exPlateToggleInput.checked = false;
+              exerciseFormModal.classList.add("open");
+              exNameInput.focus();
+            }
 
-      // Upgrade v1/v2 imports into Tracked tab if history was missing
-      if (sessionHistory.length === 0) {
-        autoMigrateExistingLogs();
-      }
+            function openExerciseModalForEdit(ex) {
+              editExId.value = ex.id;
+              exerciseFormTitle.textContent = "Edit Exercise";
+              exNameInput.value = ex.name || "";
+              exSetsInput.value = ex.targetSets || 3;
+              exRepsInput.value = ex.targetReps || "";
+              exCueInput.value = ex.cue || "";
+              exPlateToggleInput.checked = shouldShowPlateCounter(ex);
+              exerciseFormModal.classList.add("open");
+            }
 
-      if (activeDayId !== "tracked" && !routine.some(d => d.id === activeDayId)) {
-        activeDayId = routine[0]?.id || "day-mon";
-      }
+            openAddExerciseBtn.addEventListener("click", openExerciseModalForAdd);
+            closeExerciseFormBtn.addEventListener("click", () => exerciseFormModal.classList.remove("open"));
+            cancelExerciseFormBtn.addEventListener("click", () => exerciseFormModal.classList.remove("open"));
 
-      saveRoutine();
-      saveLogs();
-      saveHistory();
-      saveUnit();
-      saveActiveDay();
+            saveExerciseFormBtn.addEventListener("click", () => {
+              const name = exNameInput.value.trim();
+              if (!name) return showToast("Enter an exercise name.");
 
-      backupModal.classList.remove("open");
-      renderApp();
-      showToast("All workout data imported successfully!");
-    }
+              const sets = parseInt(exSetsInput.value, 10) || 3;
+              const reps = exRepsInput.value.trim() || "8–12 reps";
+              const cue  = exCueInput.value.trim();
+              const usePlate = exPlateToggleInput.checked;
 
-    resetDefaultsBtn.addEventListener("click", () => {
-      if (!confirm("Reset routine to the default 4-Day Split? (Your Tracked history will be kept safely)")) return;
-      routine = JSON.parse(JSON.stringify(DEFAULT_ROUTINE));
-      saveRoutine();
-      backupModal.classList.remove("open");
-      renderApp();
-      showToast("Default 4-day split restored.");
-    });
+              const targetDay = routine.find(d => d.id === editingDayId) || routine[0];
+              if (!targetDay) return;
 
-    function escapeHtml(str) {
-      if (!str) return "";
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
+              const targetId = editExId.value;
+              if (targetId) {
+                const ex = targetDay.exercises.find(e => e.id === targetId);
+                if (ex) {
+                  ex.name = name;
+                  ex.targetSets = sets;
+                  ex.targetReps = reps;
+                  ex.cue = cue;
+                  ex.enablePlateCounter = usePlate;
+                }
+              } else {
+                const newEx = {
+                  id: "ex-" + Date.now(),
+                  name,
+                  targetSets: sets,
+                  targetReps: reps,
+                  cue,
+                  enablePlateCounter: usePlate
+                };
+                targetDay.exercises.push(newEx);
+                ensureExerciseLog(newEx);
+              }
 
-    [plateModal, editRoutineModal, exerciseFormModal, backupModal].forEach(m => {
-      m.addEventListener("click", (e) => {
-        if (e.target === m) m.classList.remove("open");
-      });
-    });
+              saveRoutine();
+              saveLogs();
+              exerciseFormModal.classList.remove("open");
+              renderEditRoutineList();
+              renderApp();
+              showToast(`Saved to ${targetDay.dayName}.`);
+            });
 
-    /* =========================================================
-       INIT APP
-       ========================================================= */
-    window.addEventListener("DOMContentLoaded", () => {
-      loadState();
-      renderApp();
-    });
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js").catch(() => { });
-}
-  </script>
+            /* =========================================================
+               IMPORT / EXPORT DATA
+               ========================================================= */
+            openBackupBtn.addEventListener("click", () => backupModal.classList.add("open"));
+            closeBackupBtn.addEventListener("click", () => backupModal.classList.remove("open"));
+
+            function getExportPayload() {
+              return {
+                app: "IronLog",
+                version: 5,
+                exportedAt: new Date().toISOString(),
+                activeUnit,
+                themePreference: currentThemeMode,
+                routine,
+                logs: exerciseLogs,
+                history: sessionHistory
+              };
+            }
+
+            exportFileBtn.addEventListener("click", () => {
+              const blob = new Blob([JSON.stringify(getExportPayload(), null, 2)], { type: "application/json" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = `ironlog-backup-${new Date().toISOString().slice(0, 10)}.json`;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+              showToast("Backup .JSON file downloaded.");
+            });
+
+            copyJsonBtn.addEventListener("click", () => {
+              const jsonStr = JSON.stringify(getExportPayload(), null, 2);
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(jsonStr).then(() => showToast("Backup text copied!"))
+                  .catch(() => fallbackCopy(jsonStr));
+              } else {
+                fallbackCopy(jsonStr);
+              }
+            });
+
+            function fallbackCopy(text) {
+              const ta = document.createElement("textarea");
+              ta.value = text;
+              document.body.appendChild(ta);
+              ta.select();
+              document.execCommand("copy");
+              document.body.removeChild(ta);
+              showToast("Backup text copied!");
+            }
+
+            importFileInput.addEventListener("change", (e) => {
+              const file = e.target.files[0];
+              if (!file) return;
+              const reader = new FileReader();
+              reader.onload = (ev) => {
+                try { processImportData(JSON.parse(ev.target.result)); }
+                catch (err) { alert("Could not read file. Make sure it is a valid IronLog JSON backup."); }
+                importFileInput.value = "";
+              };
+              reader.readAsText(file);
+            });
+
+            importPastedBtn.addEventListener("click", () => {
+              const raw = pasteJsonInput.value.trim();
+              if (!raw) return showToast("Paste backup text first.");
+              try {
+                processImportData(JSON.parse(raw));
+                pasteJsonInput.value = "";
+              } catch (err) {
+                alert("Invalid JSON backup text.");
+              }
+            });
+
+            function processImportData(data) {
+              if (!data || !Array.isArray(data.routine)) {
+                alert("Invalid backup format: routine data missing.");
+                return;
+              }
+
+              const histCount = Array.isArray(data.history) ? data.history.length : 0;
+              if (!confirm(`Import backup (${data.routine.length} days, ${histCount} tracked workouts)? This will replace current data.`)) return;
+
+              routine = data.routine;
+              exerciseLogs = data.logs || {};
+              sessionHistory = Array.isArray(data.history) ? data.history : [];
+
+              if (data.activeUnit === "lbs" || data.activeUnit === "kg") activeUnit = data.activeUnit;
+              if (data.themePreference) {
+                currentThemeMode = data.themePreference;
+                saveThemePref();
+                applyTheme(currentThemeMode);
+              }
+
+              if (sessionHistory.length === 0) autoMigrateExistingLogs();
+              if (activeDayId !== "tracked" && !routine.some(d => d.id === activeDayId)) {
+                activeDayId = routine[0]?.id || "day-mon";
+              }
+              editingDayId = activeDayId === "tracked" ? (routine[0]?.id || "") : activeDayId;
+
+              saveRoutine();
+              saveLogs();
+              saveHistory();
+              saveUnit();
+              saveActiveDay();
+
+              backupModal.classList.remove("open");
+              renderApp();
+              showToast("All workout data imported successfully!");
+            }
+
+            resetDefaultsBtn.addEventListener("click", () => {
+              if (!confirm("Reset routine to the default 4-Day Split? (Your Tracked history will be kept safely)")) return;
+              routine = JSON.parse(JSON.stringify(DEFAULT_ROUTINE));
+              activeDayId = routine[0].id;
+              editingDayId = routine[0].id;
+              saveRoutine();
+              saveActiveDay();
+              backupModal.classList.remove("open");
+              renderApp();
+              showToast("Default 4-day split restored.");
+            });
+
+            function escapeHtml(str) {
+              if (!str) return "";
+              return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+            }
+
+            [plateModal, editRoutineModal, exerciseFormModal, dayFormModal, backupModal].forEach(m => {
+              m.addEventListener("click", (e) => {
+                if (e.target === m) m.classList.remove("open");
+              });
+            });
+
+            /* =========================================================
+               INIT APP & OFFLINE SERVICE WORKER
+               ========================================================= */
+            window.addEventListener("DOMContentLoaded", () => {
+              loadState();
+              renderApp();
+            });
+
+            if ("serviceWorker" in navigator) {
+              navigator.serviceWorker.register("./sw.js").catch(() => {});
+            }
+    </script>
 </body>
 </html>
